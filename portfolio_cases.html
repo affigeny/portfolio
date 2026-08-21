@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Портфолио · Евгений Андреев · UX/CX Research + AI</title>
+<style>
+:root{--bg:#0F1115;--card:#181B22;--text:#E8E8E8;--muted:#9CA3AF;--accent:#4F9DF8;--green:#34D399;--red:#F87171;--border:#2A2E37}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.65}
+.nav{position:sticky;top:0;z-index:100;background:rgba(15,17,21,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.nav .logo{font-weight:700;font-size:15px}
+.nav a{color:var(--muted);text-decoration:none;font-size:14px;transition:color .2s}
+.nav a:hover{color:var(--accent)}
+.case{max-width:900px;margin:0 auto;padding:60px 24px 40px}
+.case-title{font-size:32px;font-weight:700;margin-bottom:8px;line-height:1.2}
+.case-subtitle{font-size:14px;color:var(--muted);margin-bottom:32px}
+.case-subtitle .role{color:var(--accent)}
+.block{margin-bottom:36px}
+.block-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;display:inline-block;padding:4px 10px;border:1px solid var(--accent);border-radius:4px}
+.block-label.context{color:#FBBF24;border-color:#FBBF24}
+.block-label.insight{color:var(--red);border-color:var(--red)}
+.block-label.framework{color:var(--accent);border-color:var(--accent)}
+.block-label.eval{color:#A78BFA;border-color:#A78BFA}
+.block-label.impact{color:var(--green);border-color:var(--green)}
+.block-text{font-size:16px}
+.block-text ul{margin:8px 0 8px 20px}
+.block-text li{margin-bottom:6px}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.metric-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center}
+.metric-card .num{font-size:28px;font-weight:700;display:block}
+.metric-card .num.green{color:var(--green)}
+.metric-card .num.blue{color:var(--accent)}
+.metric-card .label{font-size:13px;color:var(--muted);margin-top:4px}
+.diagram{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;margin-top:12px;overflow-x:auto}
+.flow-step{display:inline-block;padding:8px 16px;background:#1E2330;border:1px solid var(--border);border-radius:8px;font-size:14px;margin:4px 0}
+.arrow{color:var(--muted);margin:0 8px}
+.persona-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.persona-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+.persona-card .p-name{font-weight:700;color:var(--accent);margin-bottom:4px}
+.persona-card .p-desc{font-size:14px;color:var(--muted)}
+.scenario{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:14px}
+.scenario-title{font-weight:700;margin-bottom:10px;color:var(--accent)}
+.scenario-row{display:flex;gap:8px;margin-bottom:4px;font-size:14px}
+.scenario-label{color:var(--muted);min-width:90px}
+.divider{height:1px;background:var(--border);margin:48px 0}
+.tag-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tag{background:#1E2330;border:1px solid var(--border);border-radius:4px;padding:3px 10px;font-size:12px;color:var(--muted)}
+.blueprint-layer{border-left:3px solid;padding-left:14px;margin:10px 0}
+.blueprint-layer.front{border-color:var(--green)}
+.blueprint-layer.back{border-color:var(--accent)}
+.blueprint-layer.support{border-color:var(--red)}
+.blueprint-layer h4{font-size:14px;margin-bottom:4px}
+.blueprint-layer p{font-size:13px;color:var(--muted)}
+.ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ab-card{border-radius:10px;padding:14px}
+.ab-card.control{background:rgba(248,113,113,.1);border:1px solid var(--red)}
+.ab-card.winner{background:rgba(52,211,153,.1);border:1px solid var(--green)}
+.ab-card h4{margin-bottom:6px}
+.footer{text-align:center;padding:40px 0 60px;color:var(--muted);font-size:13px}
+.footer a{color:var(--accent)}
+@media(max-width:600px){.metrics{grid-template-columns:1fr}.persona-grid{grid-template-columns:1fr}.nav{gap:12px}}
+</style>
+</head>
+<body>
+<nav class="nav">
+<span class="logo">Евгений Андреев · UX/CX Research + AI</span>
+<a href="#case1">1. Prompt Architecture</a>
+<a href="#case2">2. Conversational Flow</a>
+<a href="#case3">3. CJM Жуковка</a>
+<a href="#case4">4. Product Research</a>
+<a href="https://github.com/affigeny">GitHub ↗</a>
+</nav>
+
+<section class="case" id="case1">
+<div class="case-title">Prompt Architecture Map</div>
+<div class="case-subtitle"><span class="role">AI Product Engineer / Conversational UX Designer</span> · 2024–2026<br>AI Summary Bot / Буквица v2.0 · Python, FastAPI, aiogram 3, LLM, RAG, Docker, Render</div>
+<div class="block"><span class="block-label context">Context</span><div class="block-text">
+<strong>Проблема:</strong> Пользователи получают длинные видео/аудио (1–3 часа), не имеют времени смотреть целиком.<br><br>
+<strong>JTBD:</strong> «Быстро понять суть и решить: стоит ли углубляться / что сделать с этим».<br><br>
+<strong>Конкуренты:</strong> Обычные суммаризаторы дают один текст — не подходит под разные задачи.
+</div></div>
+<div class="block"><span class="block-label insight">Insight</span><div class="block-text">
+Один формат summary не работает. Нужна структура под задачу:
+<ul><li><strong>Minto Pyramid</strong> — для принятия решений</li><li><strong>JTBD</strong> — для продуктовой работы</li><li><strong>Action Items</strong> — для исполнения</li></ul>
+Пользователь выбирает (или авто) шаблон → получает релевантную структуру.
+</div></div>
+<div class="block"><span class="block-label framework">Prompt Architecture</span><div class="diagram">
+<div class="flow-step">User Input: YouTube / File / Text / Link</div><br><span class="arrow">↓</span><br>
+<div class="flow-step">Intent Classification → Template Selection</div><br><span class="arrow">↓</span><br>
+<div class="flow-step" style="border-color:var(--accent)"><strong>PROMPT ARCHITECTURE PER TEMPLATE</strong><br>System Prompt · Few-shot · Chain-of-Thought · RAG Context · Output Schema · Eval Loop</div><br><span class="arrow">↓</span><br>
+<div class="flow-step">LLM Generation → Iterative Dialogue (уточнение → регенерация раздела)</div><br><span class="arrow">↓</span><br>
+<div class="flow-step" style="border-color:var(--green)"><strong>Structured Output: Minto / JTBD / Action Items</strong></div>
+</div></div>
+<div class="block"><span class="block-label eval">Eval Framework</span><div class="block-text">
+Метрики качества (авто-промпты):
+<ul><li><strong>Accuracy</strong> — фактическая точность vs источник</li><li><strong>Tone Adherence</strong> — следование ToV шаблона</li><li><strong>Hallucination Rate</strong> — выдумки / 1000 токенов</li><li><strong>Task Completion</strong> — дал ли actionable результат</li><li><strong>Structure Compliance</strong> — соблюдён ли формат</li></ul>
+</div></div>
+<div class="block"><span class="block-label impact">Impact</span><div class="metrics">
+<div class="metric-card"><span class="num green">300+</span><span class="label">пользователей за 2 мес (без маркетинга)</span></div>
+<div class="metric-card"><span class="num green">34%</span><span class="label">D7 Retention</span></div>
+<div class="metric-card"><span class="num blue">480</span><span class="label">строк production-кода на GitHub</span></div>
+<div class="metric-card"><span class="num blue">CI/CD</span><span class="label">Render + GitHub Actions</span></div>
+</div><div class="tag-list"><span class="tag">Python 3.11</span><span class="tag">aiogram 3</span><span class="tag">FastAPI</span><span class="tag">SQLite</span><span class="tag">Docker</span><span class="tag">Render</span></div></div>
+</section>
+
+<div class="divider"></div>
+
+<section class="case" id="case2">
+<div class="case-title">Conversational Flow & Interaction Design</div>
+<div class="case-subtitle"><span class="role">Conversational UX Designer</span> · 2024–2026<br>AI Summary Bot · Multi-template Iterative Dialogue</div>
+<div class="block"><span class="block-label context">User Flow</span><div class="diagram">
+<div class="flow-step">1. START → User sends: YouTube URL / File / Text / Link</div><br>
+<div class="flow-step">2. BOT → detects intent → suggests 3 templates</div><br>
+<div class="flow-step">3. USER selects template → Bot generates structured summary</div><br>
+<div class="flow-step">4. USER refines: «Раскрой Risks» / «Сделай короче» / «Добавь цитаты»</div><br>
+<div class="flow-step">5. BOT regenerates ONLY that section (context preserved)</div><br>
+<div class="flow-step">6. EXPORT: Markdown / JSON / Copy to clipboard</div>
+</div></div>
+<div class="block"><span class="block-label framework">Key Interaction Patterns</span><div class="block-text"><ul>
+<li>✅ <strong>Progressive Disclosure</strong> — сначала overview, потом детали по запросу</li>
+<li>✅ <strong>Template Switching</strong> — «Переделай в Action Items» → перегенерация</li>
+<li>✅ <strong>Context Preservation</strong> — история диалога + исходный контент</li>
+<li>✅ <strong>Error Recovery</strong> — «Не понял, уточни» → graceful fallback</li>
+<li>✅ <strong>Rate Limiting</strong> — Free tier 3/мес, понятные лимиты</li>
+</ul></div></div>
+<div class="block"><span class="block-label framework">Technical Architecture</span><div class="block-text"><div class="diagram">
+User State → Template Context → Message History → RAG Index → LLM Config<br><br><span class="arrow">↓</span><br><br>
+Prompt Builder (Dynamic) → LLM Call → Response Parser → State Update
+</div></div></div>
+<div class="block"><span class="block-label impact">Impact</span><div class="metrics">
+<div class="metric-card"><span class="num green">34%</span><span class="label">D7 Retention</span></div>
+<div class="metric-card"><span class="num green">4.2</span><span class="label">взаимодействий за сессию</span></div>
+<div class="metric-card"><span class="num blue">78%</span><span class="label">юзеров сменяют шаблон ≥1 раза</span></div>
+<div class="metric-card"><span class="num blue">0</span><span class="label">критических багов в production</span></div>
+</div></div>
+</section>
+
+<div class="divider"></div>
+
+<section class="case" id="case3">
+<div class="case-title">Customer Journey Map + Service Blueprint</div>
+<div class="case-subtitle"><span class="role">CX Lead / Service Designer</span> · 2014–2017 · UHNWI<br>Жуковка / Сады Майендорф · Premium Real Estate</div>
+<div class="block"><span class="block-label context">Context</span><div class="block-text">
+<strong>Продукт:</strong> Элитный загородный клуб<br>
+<strong>Пользователи:</strong> UHNWI резиденты<br>
+<strong>Боль:</strong> Не качество услуг, а <strong>неопределённость</strong> в коммуникациях<br>
+<strong>Тревога:</strong> «Что происходит? Когда закончится? Кто отвечает?»
+</div></div>
+<div class="block"><span class="block-label framework">3 Scenarios (CJM)</span>
+<div class="scenario"><div class="scenario-title">Сценарий 1: Плановые работы</div>
+<div class="scenario-row"><span class="scenario-label">Touchpoints:</span> SMS (24ч) → Email (2ч) → Push (старт) → Push (завершение)</div>
+<div class="scenario-row"><span class="scenario-label">Emotions:</span> Спокойствие → Информированность → Уверенность</div>
+<div class="scenario-row"><span class="scenario-label">Pain (до):</span> Неожиданность, нет времени подготовиться</div>
+<div class="scenario-row"><span class="scenario-label">Solution:</span> Триггерные уведомления + Tone of Voice</div></div>
+<div class="scenario"><div class="scenario-title">Сценарий 2: Аварийная ситуация</div>
+<div class="scenario-row"><span class="scenario-label">Touchpoints:</span> SMS (мгновенно) → Звонок → Статус в app → SMS (решение)</div>
+<div class="scenario-row"><span class="scenario-label">Emotions:</span> Тревога → Поддержка → Контроль → Облегчение</div>
+<div class="scenario-row"><span class="scenario-label">Pain (до):</span> Тишина, паника, повторные звонки</div>
+<div class="scenario-row"><span class="scenario-label">Solution:</span> Проактивная коммуникация, SLA 5 мин</div></div>
+<div class="scenario"><div class="scenario-title">Сценарий 3: Бытовой запрос</div>
+<div class="scenario-row"><span class="scenario-label">Touchpoints:</span> Приложение/Чат → Принятие → Статусы → Завершение → Оценка</div>
+<div class="scenario-row"><span class="scenario-label">Emotions:</span> Удобство → Прозрачность → Завершённость</div>
+<div class="scenario-row"><span class="scenario-label">Pain (до):</span> Запрос теряется, нет обратной связи</div>
+<div class="scenario-row"><span class="scenario-label">Solution:</span> Единое окно, трекинг, CSAT</div></div>
+</div>
+<div class="block"><span class="block-label framework">Service Blueprint</span>
+<div class="blueprint-layer front"><h4>🟢 Frontstage (резидент видит)</h4><p>Уведомления, Приложение, Чат, Звонки</p></div>
+<div class="blueprint-layer back"><h4>🔵 Backstage (не видит)</h4><p>Диспетчерская → Мастера → CRM → SMS-шлюз → Склад</p></div>
+<div class="blueprint-layer support"><h4>🔴 Support Processes</h4><p>SLA мониторинг, ToV гайд, Обучение персонала, NPS</p></div>
+</div>
+<div class="block"><span class="block-label framework">Personas (4 типа)</span><div class="persona-grid">
+<div class="persona-card"><div class="p-name">«Основатель»</div><div class="p-desc">Деловой, ценит время, хочет контроль</div></div>
+<div class="persona-card"><div class="p-name">«Семейный»</div><div class="p-desc">Заботится о комфорте семьи, эмоционален</div></div>
+<div class="persona-card"><div class="p-name">«Инвестор»</div><div class="p-desc">Смотрит на актив, хочет прозрачности расходов</div></div>
+<div class="persona-card"><div class="p-name">«Путешественник»</div><div class="p-desc">Редко на месте, нужен remote-доступ</div></div>
+</div></div>
+<div class="block"><span class="block-label impact">Impact</span><div class="metrics">
+<div class="metric-card"><span class="num green">−40%</span><span class="label">повторных жалоб за 6 мес</span></div>
+<div class="metric-card"><span class="num green">+26</span><span class="label">NPS: 62 → 78</span></div>
+<div class="metric-card"><span class="num blue">−35%</span><span class="label">время обработки обращения</span></div>
+<div class="metric-card"><span class="num blue">ToV</span><span class="label">гайд внедрён во все каналы</span></div>
+</div></div>
+</section>
+
+<div class="divider"></div>
+
+<section class="case" id="case4">
+<div class="case-title">Product Research Cycle: Discovery → Hypothesis → Experiment → Scale</div>
+<div class="case-subtitle"><span class="role">UX Researcher / Product Designer</span> · 2018–2020 · EdTech B2C2B<br>Роболатория (Робототехника для детей 6–14) · Amplitude, A/B Testing, Cohort Analysis</div>
+<div class="block"><span class="block-label context">Context</span><div class="block-text">
+<strong>Продукт:</strong> Онлайн-школа робототехники<br>
+<strong>Модель:</strong> B2C2B — родители платят, дети учатся<br>
+<strong>Проблемы:</strong><ul><li>Trial → Paid конверсия низкая</li><li>Отток месяц 1 > 50%</li><li>Completion Rate ~40%</li></ul>
+</div></div>
+<div class="block"><span class="block-label insight">Research & Insights</span><div class="block-text">
+<strong>Методы:</strong> Amplitude Funnel + Cohort Retention + Competitive Audit (10 платформ)<br><br>
+<strong>Инсайты:</strong><ul>
+<li>🔴 <strong>Родители:</strong> Не понимают ценность. JTBD: «Подготовить ребёнка к будущему, не мучаясь»</li>
+<li>🔴 <strong>Дети:</strong> Когнитивная перегрузка на PDF-сборке. JTBD: «Создать что-то своё и показать папе»</li>
+</ul></div></div>
+<div class="block"><span class="block-label framework">Interventions</span><div class="block-text"><ul>
+<li><strong>Личный кабинет:</strong> Упростили навигацию, визуальный прогресс, геймификация</li>
+<li><strong>Инструкции:</strong> PDF → Интерактивные пошаговые схемы сборки</li>
+<li><strong>Onboarding:</strong> Видео → Микрозадача → Быстрый результат</li>
+<li><strong>Landing pages:</strong> Под каждую персону родителя (4 варианта)</li>
+</ul></div></div>
+<div class="block"><span class="block-label eval">Validation (A/B Testing)</span><div class="ab-grid">
+<div class="ab-card control"><h4>🔴 Контроль</h4><p>Старый PDF-онбординг</p></div>
+<div class="ab-card winner"><h4>🟢 Победитель</h4><p>Интерактивные схемы + микрозадачи + прогресс-бар</p></div>
+</div><div class="block-text" style="margin-top:14px">
+<strong>12 вариантов</strong> в A/B тестах (Amplitude)<br>
+<strong>Результат:</strong> +22% время сессии, +18% trial→paid<br><br>
+<strong>Cohort Retention:</strong><ul><li>Месяц 1: 31% → 42% (+35%)</li><li>Месяц 3: 18% → 28%</li></ul>
+</div></div>
+<div class="block"><span class="block-label impact">Impact</span><div class="metrics">
+<div class="metric-card"><span class="num green">+18%</span><span class="label">Конверсия Trial → Paid</span></div>
+<div class="metric-card"><span class="num green">+35%</span><span class="label">Retention месяц 1</span></div>
+<div class="metric-card"><span class="num green">+22%</span><span class="label">Средний чек (AOV)</span></div>
+<div class="metric-card"><span class="num blue">62%</span><span class="label">Completion Rate (с 40%)</span></div>
+</div><div class="tag-list" style="margin-top:16px"><span class="tag">🏆 Премия Губернатора МО</span><span class="tag">🏆 Инвестиции МинЭкономРазвития РФ</span></div></div>
+</section>
+
+<div class="footer">
+Евгений Андреев · Senior UX/CX Researcher · AI Product & UX<br>
+GitHub: <a href="https://github.com/affigeny">github.com/affigeny</a> · +7 905 745 7778 · 8885882@mail.ru
+</div>
+</body>
+</html>
