@@ -1,12 +1,12 @@
 # Портфолио — Евгений Андреев
 
-[![Live](https://img.shields.io/badge/live-affigeny.github.io%2Fportfolio-2563EB)](https://affigeny.github.io/portfolio/)
-[![Release](https://img.shields.io/github/v/release/affigeny/portfolio?color=success)](https://github.com/affigeny/portfolio/releases)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deployed-222222?logo=github)](https://affigeny.github.io/portfolio/)
+[![Live](https://img.shields.io/badge/live-andreevgeny.github.io%2Fportfolio-2563EB)](https://andreevgeny.github.io/portfolio/)
+[![Release](https://img.shields.io/github/v/release/affigeny/portfolio?color=success)](https://github.com/andreevgeny/portfolio/releases)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deployed-222222?logo=github)](https://andreevgeny.github.io/portfolio/)
 [![HTML5](https://img.shields.io/badge/HTML5-static-E34F26?logo=html5&logoColor=white)](index.html)
 [![No build](https://img.shields.io/badge/build-none-lightgrey)](index.html)
 
-Живая страница: **https://affigeny.github.io/portfolio/**
+Живая страница: **https://andreevgeny.github.io/portfolio/**
 
 Одностраничное портфолио: исследование поведения, аналитика, тексты, AI. Каждая ссылка ведёт на публичный код или живую страницу — в разделе «Артефакты» нет ни одной цифры, которую нельзя проверить в один клик.
 
