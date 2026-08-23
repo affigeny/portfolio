@@ -142,7 +142,7 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
       <p class="rise" data-d="2">Тестировал свой же прототип — <a href="https://affigeny.github.io/profi-case-study/">affigeny.github.io/profi-case-study</a>. Прогон в Chrome, десктоп 1712px и мобильный вьюпорт 390px, через DevTools и accessibility-дерево. Ниже — реальные находки, не выдуманные.</p>
     </div>
     <div class="note rise">
-      <b>Сводка.</b> Проверено: разметка, семантика заголовков, доступность, адаптивность на 390 / 1712 px, консоль, ссылки и интерактивные элементы. Найдено <b>4 дефекта</b>: 0 критических, 1 средний, 3 низких. Блокирующих нет — прототип функционально исправен; находки касаются семантики, доступности и мелочей вёрстки. Хороший результат для прототипа, но каждый пункт стоит закрыть перед продакшеном.
+      <b>Сводка.</b> Проверено: разметка, семантика заголовков, доступность, адаптивность на 390 / 1712 px, консоль, ссылки и интерактивные элементы. Найдено <b>3 дефекта</b>: 0 критических, 1 средний, 2 низких. Блокирующих нет; находки касаются семантики и содержания страницы.
     </div>
   </div>
 </section>
@@ -169,19 +169,6 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
       </dl>
     </div>
 
-    <div class="bug low rise">
-      <div class="bug-head">
-        <h3>Пустая кнопка без доступного имени в DOM</h3>
-        <span class="sev low">Low</span><span class="cat">Доступность · Консоль</span>
-      </div>
-      <dl>
-        <dt>Где</dt><dd>Элемент <code>&lt;button id="cgw_action_btn"&gt;</code>, спрятан за экран (<code>top:-9999px</code>)</dd>
-        <dt>Факт</dt><dd>Кнопка без текста и без <code>aria-label</code>, размер 1×1px. Похоже на служебный элемент стороннего скрипта или артефакт вставки.</dd>
-        <dt>Ожидание</dt><dd>Интерактивных элементов без доступного имени в DOM быть не должно; служебные — помечать <code>aria-hidden="true"</code>.</dd>
-        <dt>Как воспроизвести</dt><dd>Найти в DOM все <code>button</code> без текста и без aria-label.</dd>
-        <dt>Починка</dt><dd>Удалить, если не используется, или добавить <code>aria-hidden="true"</code> и <code>tabindex="-1"</code> (последнее уже стоит).</dd>
-      </dl>
-    </div>
 
     <div class="bug low rise">
       <div class="bug-head">
@@ -218,9 +205,8 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
         <thead><tr><th>#</th><th>Дефект</th><th>Серьёзность</th><th>Категория</th></tr></thead>
         <tbody>
           <tr><td>1</td><td>H2 → H4, пропущен H3</td><td>Medium</td><td>Доступность</td></tr>
-          <tr><td>2</td><td>Пустая кнопка без имени</td><td>Low</td><td>Доступность</td></tr>
-          <tr><td>3</td><td>Title 66 символов</td><td>Low</td><td>SEO</td></tr>
-          <tr><td>4</td><td>Несуществующие должности в заголовке</td><td>Low</td><td>UX</td></tr>
+          <tr><td>2</td><td>Title 66 символов</td><td>Low</td><td>SEO</td></tr>
+          <tr><td>3</td><td>Несуществующие должности в заголовке</td><td>Low</td><td>UX</td></tr>
         </tbody>
       </table>
     </div>
