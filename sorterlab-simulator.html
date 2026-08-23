@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SorterLab — параметрическая модель сортировочного центра</title>
+<meta name="description" content="Интерактивная исследовательская модель пропускной способности сортировочного центра: линии подачи, сортировщики, AMR, неравномерность и backlog.">
+<style>
+:root{--ink:#050505;--ink2:#0b0b0c;--surface:#171717;--surface2:#202020;--line:#38332f;--text:#f7f3ee;--muted:#b8afa7;--dim:#7d746d;--fire:#ef8734;--hot:#ffc16a;--blue:#58b2dc;--bad:#e65c53;--ok:#68c878;--r:16px;--pad:clamp(16px,3vw,34px);--shell:min(1440px,calc(100% - var(--pad) - var(--pad)))}
+*{box-sizing:border-box}html{color-scheme:dark}body{margin:0;background:var(--ink);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45;font-variant-ligatures:none}a{color:var(--fire);text-decoration:none}button,input{font:inherit}.shell{width:var(--shell);margin:auto}.top{display:flex;align-items:center;gap:18px;min-height:60px;border-bottom:1px solid var(--line)}.brand{font-weight:800;letter-spacing:.08em}.brand b{color:var(--fire)}.top a{margin-left:auto;font-size:13px}.intro{padding:28px 0 20px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:end}.kicker,.eyebrow{font:11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--fire)}h1{font-size:clamp(30px,4.2vw,62px);line-height:.96;margin:9px 0 13px;max-width:20ch}.intro p{color:var(--muted);max-width:76ch;margin:0}.status{border:1px solid #3e603f;border-radius:999px;padding:8px 12px;color:var(--ok);font:11px ui-monospace,SFMono-Regular,Menlo,monospace;white-space:nowrap}.app{display:grid;grid-template-columns:290px minmax(0,1fr);gap:14px;padding-bottom:36px}.panel,.block{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}.panel{padding:18px;align-self:start;position:sticky;top:14px}.panel h2,.block h2{font-size:14px;margin:0}.group{margin-top:18px}.control{margin-top:15px}.control-head{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--muted);margin-bottom:7px}.control output{color:var(--text);font-weight:700}.control input{width:100%;accent-color:var(--fire)}.divider{height:1px;background:var(--line);margin:18px 0}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}.buttons button{min-height:42px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--text);cursor:pointer}.buttons .run{background:var(--fire);color:#160800;border:0;font-weight:800}.hint{font-size:11px;color:var(--dim);margin-top:12px}.main{min-width:0;display:grid;gap:14px}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.kpi{padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}.kpi span{font-size:11px;color:var(--muted)}.kpi strong{display:block;font-size:clamp(20px,2.4vw,32px);margin-top:5px;letter-spacing:-.04em}.kpi small{color:var(--dim)}.kpi.bad strong{color:var(--bad)}.block{padding:18px}.nodes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}.node{background:var(--ink2);border:1px solid var(--line);border-radius:12px;padding:14px}.node.hot{border-color:var(--fire)}.node .code{font:11px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--fire)}.node strong{display:block;font-size:20px;margin:6px 0}.node small{color:var(--dim)}.canvas-wrap{height:260px;margin-top:12px;position:relative}canvas{width:100%;height:100%;display:block}.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;color:var(--muted);font-size:11px}.legend i{display:inline-block;width:16px;height:3px;margin-right:5px;vertical-align:middle}.assumptions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.assumption{border-top:1px solid var(--line);padding-top:10px;color:var(--muted);font-size:12px}.assumption b{color:var(--text)}.warning{margin-top:14px;border:1px solid #6d5935;border-radius:12px;padding:13px;color:var(--muted);font-size:12px;background:#211a11}.warning b{color:var(--hot)}
+@media(max-width:950px){.app{grid-template-columns:1fr}.panel{position:static}.kpis{grid-template-columns:1fr 1fr}.nodes{grid-template-columns:1fr}.intro{grid-template-columns:1fr}.status{justify-self:start}}@media(max-width:540px){.kpis,.assumptions{grid-template-columns:1fr}.top{flex-wrap:wrap;padding:10px 0}.top a{margin-left:0}}
+</style>
+</head>
+<body>
+<header class="shell top"><div class="brand">SORTER<b>LAB</b></div><span class="eyebrow">research model · v1.0</span><a href="sorterlab.html">← к разбору кейса</a></header>
+<main class="shell">
+<section class="intro"><div><div class="kicker">Monitor · поток и ограничения</div><h1>Параметрическая модель сортировочного центра</h1><p>Меняйте конфигурацию A → B → E и наблюдайте, какой узел ограничивает выпуск. Один тик равен одной минуте. Все расчёты воспроизводимы; случайная составляющая использует фиксированный seed.</p></div><div class="status">ИССЛЕДОВАТЕЛЬСКАЯ МОДЕЛЬ</div></section>
+<div class="app">
+<aside class="panel">
+<h2>Параметры системы</h2>
+<div class="group">
+<div class="control"><div class="control-head"><label for="a">Линии подачи A</label><output id="va">12</output></div><input id="a" type="range" min="4" max="24" value="12"></div>
+<div class="control"><div class="control-head"><label for="b">Контуры сортировки B</label><output id="vb">4</output></div><input id="b" type="range" min="1" max="8" value="4"></div>
+<div class="control"><div class="control-head"><label for="e">AMR-роботы E</label><output id="ve">37</output></div><input id="e" type="range" min="5" max="80" value="37"></div>
+</div>
+<div class="divider"></div>
+<div class="group">
+<div class="control"><div class="control-head"><label for="v">Товаров в КТЯ</label><output id="vv">16</output></div><input id="v" type="range" min="6" max="40" value="16"></div>
+<div class="control"><div class="control-head"><label for="cycle">Цикл AMR, секунд</label><output id="vcycle">19</output></div><input id="cycle" type="range" min="10" max="60" value="19"></div>
+<div class="control"><div class="control-head"><label for="u">Неравномерность подачи</label><output id="vu">30%</output></div><input id="u" type="range" min="0" max="60" step="5" value="30"></div>
+<div class="control"><div class="control-head"><label for="k">Концентрация направлений</label><output id="vk">0.4</output></div><input id="k" type="range" min="0" max="15" value="4"></div>
+</div>
+<div class="divider"></div><div class="buttons"><button class="run" id="run">Старт</button><button id="reset">Сброс</button></div><div class="hint">Цель: 100 000 товаров/ч. Входной поток — суточная волна + детерминированный шум.</div>
+</aside>
+<div class="main">
+<section class="kpis">
+<div class="kpi"><span>Подача сейчас</span><strong id="feed">0</strong><small>тов./мин</small></div>
+<div class="kpi"><span>Мощность системы</span><strong id="capacity">0</strong><small>тов./ч</small></div>
+<div class="kpi"><span>Узкое место</span><strong id="bottleneck">—</strong><small id="reserve">—</small></div>
+<div class="kpi" id="backCard"><span>Backlog</span><strong id="backlog">0</strong><small>товаров в буфере</small></div>
+</section>
+<section class="block"><h2>Мощность узлов</h2><div class="nodes">
+<div class="node" id="nodeA"><div class="code">A · подача и сканирование</div><strong id="capA">0</strong><small>A × 150 тов./мин × 60</small></div>
+<div class="node" id="nodeB"><div class="code">B · cross-belt сортировка</div><strong id="capB">0</strong><small>B × 30 000 тов./ч × ρ(k)</small></div>
+<div class="node" id="nodeE"><div class="code">E · вывоз КТЯ роботами</div><strong id="capE">0</strong><small>E × floor(3600 / цикл) × вместимость</small></div>
+</div></section>
+<section class="block"><h2>Поток в реальном времени</h2><div class="canvas-wrap"><canvas id="chart"></canvas></div><div class="legend"><span><i style="background:var(--fire)"></i>подача</span><span><i style="background:var(--blue)"></i>обработка</span><span><i style="background:var(--bad)"></i>цель 1 667/мин</span></div></section>
+<section class="block"><h2>Что заложено в расчёт</h2><div class="assumptions">
+<div class="assumption"><b>A.</b> Одна линия подаёт 150 товаров/мин — исходное проектное допущение.</div>
+<div class="assumption"><b>B.</b> Один сортировочный контур даёт 30 000 товаров/ч. Коэффициент ρ(k) — сценарная поправка на перекос направлений.</div>
+<div class="assumption"><b>E.</b> Производительность AMR считается через полный цикл в секундах и вместимость КТЯ. Ошибка размерности ранней версии устранена.</div>
+<div class="assumption"><b>Tsys.</b> Общая мощность равна минимуму мощностей A, B и E. Backlog растёт, когда подача выше Tsys.</div>
+</div><div class="warning"><b>Граница применимости.</b> Это инструмент проверки чувствительности и поиска bottleneck, а не цифровой двойник. Для промышленного расчёта нужны фактическое распределение SKU, паспортные характеристики, планировка, правила WMS/WCS, буферы, отказы, зарядка AMR и данные реального потока.</div></section>
+</div></div>
+</main>
+<script>
+(()=>{'use strict';
+const GOAL_H=100000,GOAL_M=GOAL_H/60,MAX=60;
+const $=id=>document.getElementById(id);const ids=['a','b','e','v','cycle','u','k'];
+let timer=null,tick=0,back=0,seed=20260823;const hist={feed:[],proc:[]};
+function rng(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}
+function params(){return{A:+$('a').value,B:+$('b').value,E:+$('e').value,V:+$('v').value,cycle:+$('cycle').value,u:+$('u').value/100,k:+$('k').value/10}}
+function caps(p){const A=p.A*150*60;const rho=Math.max(.65,1-.12*p.k);const B=p.B*30000*rho;const E=p.E*Math.floor(3600/p.cycle)*p.V;const nodes=[['Подача A',A,'nodeA'],['Сортировка B',B,'nodeB'],['AMR E',E,'nodeE']];nodes.sort((x,y)=>x[1]-y[1]);return{A,B,E,min:nodes[0][1],bn:nodes[0]}}
+function fmt(n){return Math.round(n).toLocaleString('ru-RU')}
+function update(){const p=params(),c=caps(p);$('va').value=p.A;$('vb').value=p.B;$('ve').value=p.E;$('vv').value=p.V;$('vcycle').value=p.cycle;$('vu').value=Math.round(p.u*100)+'%';$('vk').value=p.k.toFixed(1);$('capA').textContent=fmt(c.A)+' /ч';$('capB').textContent=fmt(c.B)+' /ч';$('capE').textContent=fmt(c.E)+' /ч';$('capacity').textContent=fmt(c.min);$('bottleneck').textContent=c.bn[0];const delta=(c.min/GOAL_H-1)*100;$('reserve').textContent=(delta>=0?'+':'')+delta.toFixed(1)+'% к цели';document.querySelectorAll('.node').forEach(n=>n.classList.remove('hot'));$(c.bn[2]).classList.add('hot');draw();return{p,c}}
+function step(){const {p,c}=update();const wave=1+p.u*Math.sin(2*Math.PI*tick/24);const noise=1+p.u*.35*(rng()*2-1);const incoming=Math.max(0,GOAL_M*wave*noise);const capM=c.min/60;const processed=Math.min(incoming+back,capM);back=Math.max(0,back+incoming-processed);hist.feed.push(incoming);hist.proc.push(processed);if(hist.feed.length>MAX){hist.feed.shift();hist.proc.shift()}$('feed').textContent=fmt(incoming);$('backlog').textContent=fmt(back);$('backCard').classList.toggle('bad',back>200);tick++;draw()}
+function reset(){clearInterval(timer);timer=null;tick=0;back=0;seed=20260823;hist.feed.length=hist.proc.length=0;$('run').textContent='Старт';$('feed').textContent='0';$('backlog').textContent='0';$('backCard').classList.remove('bad');update()}
+function draw(){const canvas=$('chart'),r=canvas.getBoundingClientRect(),dpr=devicePixelRatio||1;canvas.width=Math.max(1,r.width*dpr);canvas.height=Math.max(1,r.height*dpr);const x=canvas.getContext('2d');x.scale(dpr,dpr);const w=r.width,h=r.height,pad=28;const all=[...hist.feed,...hist.proc,GOAL_M];const max=Math.max(2200,...all)*1.1;x.strokeStyle='#302c29';x.lineWidth=1;for(let i=0;i<5;i++){const y=pad+(h-pad*2)*i/4;x.beginPath();x.moveTo(pad,y);x.lineTo(w-pad,y);x.stroke()}function line(data,color){if(!data.length)return;x.strokeStyle=color;x.lineWidth=2;x.beginPath();data.forEach((v,i)=>{const px=pad+(w-pad*2)*(data.length===1?0:i/(MAX-1));const py=h-pad-(h-pad*2)*v/max;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke()}const gy=h-pad-(h-pad*2)*GOAL_M/max;x.strokeStyle='#e65c53';x.setLineDash([6,5]);x.beginPath();x.moveTo(pad,gy);x.lineTo(w-pad,gy);x.stroke();x.setLineDash([]);line(hist.feed,'#ef8734');line(hist.proc,'#58b2dc');x.fillStyle='#7d746d';x.font='11px system-ui';x.fillText(fmt(max)+'/мин',pad,14);x.fillText('0',pad,h-8)}
+ids.forEach(id=>$(id).addEventListener('input',update));$('run').addEventListener('click',()=>{if(timer){clearInterval(timer);timer=null;$('run').textContent='Старт'}else{timer=setInterval(step,450);$('run').textContent='Пауза'}});$('reset').addEventListener('click',reset);addEventListener('resize',draw);reset();
+})();
+</script>
+</body>
+</html>
