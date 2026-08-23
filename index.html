@@ -7,7 +7,7 @@
 <meta name="description" content="Евгений Андреев. Исследую поведение людей там, где цена ошибки высока: UHNWI, премиальный сервис, операторы АСУ ТП, iGaming. Тексты, аналитика, Python и LLM в продакшене.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Golos+Text:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════════════════
    RESONANT STARK · те же токены, что на viral.html
@@ -29,7 +29,7 @@
 
   --r-sm:10px; --r:18px; --r-lg:28px;
   --pad:clamp(20px,4vw,44px);
-  --shell:min(1180px,100% - 2*var(--pad));
+  --shell:min(1180px,calc(100% - var(--pad) - var(--pad)));
   --ease-out:cubic-bezier(.16,1,.3,1);
   --ease-io:cubic-bezier(.76,0,.24,1);
   --glass:blur(22px) saturate(140%);
@@ -38,7 +38,7 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   background:var(--ink);color:var(--text);
-  font-family:'Manrope',system-ui,sans-serif;line-height:1.65;letter-spacing:-.01em;
+  font-family:'Golos Text',system-ui,sans-serif;line-height:1.65;letter-spacing:-.01em;
   overflow-x:clip;text-wrap:pretty;
   /* лигатуры выключены: иначе ffi в affigeny склеивается в глиф
      и скопированная из PDF/страницы ссылка ведёт на 404 */
@@ -52,16 +52,16 @@ a:hover{color:var(--fire-hot)}
 img,svg{display:block;max-width:100%}
 
 /* ── типографика ─────────────────────────────────────────── */
-.display{font-family:'Bebas Neue',Impact,sans-serif;line-height:.84;
+.display{font-family:'Oswald',Impact,sans-serif;line-height:.84;
   letter-spacing:-.02em;text-transform:uppercase;font-weight:400}
-h2.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4.6vw,62px);
+h2.sec-title{font-family:'Oswald',sans-serif;font-size:clamp(32px,4.6vw,62px);
   line-height:.88;letter-spacing:-.015em;text-transform:uppercase}
 h3{font-size:17.5px;font-weight:800;letter-spacing:-.015em;line-height:1.28}
 h4{font-size:15.5px;font-weight:800}
 p{color:var(--muted);font-size:15.5px}
-.kicker{color:var(--fire);font-family:'JetBrains Mono',monospace;font-size:11px;
+.kicker{color:var(--fire);font-family:'IBM Plex Mono',monospace;font-size:11px;
   letter-spacing:.22em;text-transform:uppercase}
-.mono{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.1em}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em}
 strong,b{color:var(--text);font-weight:800}
 em{color:var(--fire-hot);font-style:normal;font-weight:700}
 
@@ -71,7 +71,7 @@ section{position:relative;padding-block:clamp(52px,7vh,92px)}
 .sec-head .kicker{display:block;margin-bottom:12px}
 .sec-head p{margin-top:14px;font-size:16px}
 .sec-num{position:absolute;top:clamp(18px,3vh,40px);right:var(--pad);
-  font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,9vw,132px);line-height:.7;
+  font-family:'Oswald',sans-serif;font-size:clamp(52px,9vw,132px);line-height:.7;
   color:transparent;-webkit-text-stroke:1px var(--line);pointer-events:none;user-select:none}
 
 /* ── появление по скроллу ─────────────────────────────────
@@ -95,12 +95,18 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 .nav{position:fixed;inset:0 0 auto 0;z-index:90;
   background:oklch(5% 0 0/.74);backdrop-filter:var(--glass);border-bottom:1px solid var(--line)}
 .nav-in{width:var(--shell);margin-inline:auto;display:flex;align-items:center;gap:24px;height:56px}
-.nav .brand{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.06em;color:var(--dim)}
+.nav .brand{font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:.06em;color:var(--dim)}
 .nav .brand b{color:var(--fire-deep)}
 .nav-links{display:flex;gap:20px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-links a{font-size:13px;color:var(--muted);white-space:nowrap}
 @media (max-width:760px){.nav-links{gap:14px}.nav-links a{font-size:12px}}
+@media (max-width:560px){
+  /* На мобильном шапка остаётся навигацией, а не обрезанным
+     десктопным меню: главный выбор + прямой контакт. */
+  .nav-links a{display:none}
+  .nav-links a:nth-child(2),.nav-links a:last-child{display:block}
+}
 
 /* ── HERO ────────────────────────────────────────────────── */
 .hero{position:relative;padding:112px 0 124px;overflow:clip}
@@ -162,7 +168,7 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
   background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),oklch(80% 0.14 55/.14),transparent 62%);
   opacity:0;transition:opacity .4s}
 .card:hover::after{opacity:1}
-.card .role{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;
+.card .role{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;
   text-transform:uppercase;color:var(--fire);margin-bottom:12px}
 .card h3{margin-bottom:8px;transform:translateZ(24px)}
 .card p{flex:1;font-size:14.5px}
@@ -171,7 +177,7 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 .card .facts b{color:var(--ok)}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .tag{background:oklch(100% 0 0/.04);border:1px solid var(--line);border-radius:5px;
-  padding:3px 9px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--dim)}
+  padding:3px 9px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--dim)}
 .card .links{margin-top:15px;display:flex;gap:16px;flex-wrap:wrap;font-size:14px;font-weight:700}
 
 /* ── ТАБЛИЦЫ ─────────────────────────────────────────────── */
@@ -179,7 +185,7 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
   padding:4px 12px 8px;background:var(--ink-2)}
 table{width:100%;border-collapse:collapse;font-size:14.5px}
 th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--dim);font-weight:400;border-bottom-color:var(--fire-deep)}
 td:first-child{white-space:nowrap;color:var(--fire);font-weight:700;padding-right:22px}
 td b{color:var(--text)}
@@ -218,16 +224,16 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
     <div class="ember b"></div>
   </div>
   <div class="shell hero-inner">
-    <div class="kicker rise">Исследование поведения · тексты · аналитика · AI</div>
+    <div class="kicker rise">Системный анализ · поведение · сложные системы · AI</div>
     <h1 class="display rise" data-d="1" style="margin-top:16px">
-      Смотрю, что люди <span class="l2">делают</span>, а не что говорят
+      Вижу систему <span class="l2">целиком</span>. Соединяю тех, кто видит свою часть
     </h1>
-    <p class="tagline rise" data-d="2">Двадцать пять лет работаю там, где цена ошибки высока и правду никто не скажет прямо: резиденты элитного посёлка, оператор в аварийном режиме, зал с профессиональными игроками, приёмка объекта, где заказчик и исполнитель имеют в виду разное.</p>
+    <p class="tagline rise" data-d="2">Специалист знает детали, руководитель — цели и сроки, заказчик — желаемый результат, пользователь — реальную работу. Самые дорогие ошибки возникают между ними. Я нахожу расхождения, перевожу между профессиональными языками и удерживаю исходную цель до результата для бенефициара.</p>
     <div class="contacts cta rise" data-d="3">
       <a class="pill hot" href="#work">Смотреть артефакты</a>
       <a class="pill" href="https://t.me/Evandrus">Написать в Telegram</a>
     </div>
-    <p class="sub rise" data-d="3">Инженер-теплоэнергетик. Метод — наблюдение с фиксацией и подсчётом, а не опрос. Восемь лет вёл журнал наблюдений по видеонаблюдению в казино, три года отвечал за сервис для резидентов элитного посёлка категории UHNWI (сверхвысокий доход), семь лет проектировал автоматику и операторские интерфейсы. С 2024 года пишу код на Python с языковыми моделями. Москва / Одинцово, MSK, удалённо.</p>
+    <p class="sub rise" data-d="3">Инженер-теплоэнергетик. Проектировал автоматику и интерфейсы MasterSCADA, руководил инженерами, создавал проектный отдел, отвечал за сервис UHNWI, восемь лет вёл журнал поведенческих наблюдений. С 2024 года пишу код на Python с языковыми моделями. Москва / Одинцово, MSK, удалённо.</p>
     <div class="contacts rise" data-d="3" style="font-size:13.5px">
       <a href="writing.html">Работы в текстах →</a>
       <a href="archetypes.html">Архетипы в UHNWI →</a>
@@ -244,24 +250,24 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
   <div class="shell">
     <div class="sec-head">
       <span class="kicker rise">01 · Что я делаю</span>
-      <h2 class="sec-title rise" data-d="1">Четыре вещи, за которые меня берут</h2>
+      <h2 class="sec-title rise" data-d="1">Где я создаю ценность</h2>
     </div>
     <div class="bento">
       <div class="cell w6 rise">
-        <h4>Наблюдение с протоколом</h4>
-        <p>Систематическая фиксация поведения в естественной среде: кто и что работает в пользу организации, а кто расходует ресурс. Восемь лет журнала по видеонаблюдению: связка «игрок — крупье», fraud analytics, разбор ошибок и мотиваций. По этим данным меняли обучение и расстановку смен.</p>
+        <h4>Сохраняю исходную цель</h4>
+        <p>Отделяю реальную потребность от первого предложенного решения. Проверяю всю цепочку: цель → требование → реализация → действие пользователя → результат для бенефициара.</p>
       </div>
       <div class="cell w6 rise" data-d="1">
-        <h4>Интерфейсы между сторонами</h4>
-        <p>Заказчик платит, пользователь работает, подрядчик делает, автор идеи придумал — и все четверо имеют в виду разное. Вытаскиваю расхождение наружу, свожу к одному описанию и держу, чтобы по ходу проекта ожидания не разъехались.</p>
+        <h4>Соединяю уровни системы</h4>
+        <p>Специалисту нужна точность, руководителю — решение и цена, пользователю — понятное действие, заказчику — управляемый результат. Нахожу расхождения и фиксирую общее понимание.</p>
       </div>
       <div class="cell w6 rise" data-d="2">
-        <h4>Перевод сложного в понятное</h4>
-        <p>Юридический, инженерный и регуляторный текст → человеческий, без потери точности. Договоры и разъяснительные письма промышленным потребителям газа, регламенты службы эксплуатации, инструкции оператора, тон обращения в аварии и при выставлении счёта.</p>
+        <h4>Вижу реальное поведение</h4>
+        <p>Наблюдаю, фиксирую повторяющиеся паттерны и отделяю факт от интерпретации. Это работает там, где человек не может, не хочет или не умеет точно объяснить проблему.</p>
       </div>
       <div class="cell w6 rise" data-d="3">
-        <h4>AI в продакшене, а не в презентации</h4>
-        <p>Телеграм-боты на Python: приём видео, аудио и ссылок, транскрибация, обработка по шаблонам, диалог с моделью. Своя промпт-архитектура, оценка качества ответов, обход блокировок, Docker, релизный цикл.</p>
+        <h4>Довожу смысл до работающей формы</h4>
+        <p>Не останавливаюсь на рекомендации: собираю документ, регламент, сценарий, прототип, интерфейс или код. Технический опыт позволяет оценить реализуемость и говорить с исполнителем предметно.</p>
       </div>
     </div>
   </div>
