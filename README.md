@@ -1,7 +1,7 @@
 # Портфолио — Евгений Андреев
 
 [![Live](https://img.shields.io/badge/live-andreevgeny.github.io%2Fportfolio-2563EB)](https://andreevgeny.github.io/portfolio/)
-[![Release](https://img.shields.io/github/v/release/affigeny/portfolio?color=success)](https://github.com/andreevgeny/portfolio/releases)
+[![Release](https://img.shields.io/github/v/release/andreevgeny/portfolio?color=success)](https://github.com/andreevgeny/portfolio/releases)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deployed-222222?logo=github)](https://andreevgeny.github.io/portfolio/)
 [![HTML5](https://img.shields.io/badge/HTML5-static-E34F26?logo=html5&logoColor=white)](index.html)
 [![No build](https://img.shields.io/badge/build-none-lightgrey)](index.html)
@@ -19,6 +19,7 @@
 | `writing.html` | Тексты и редактура |
 | `archetypes.html` | Аудит брендовых архетипов |
 | `value.html` | Ценностное предложение |
+| `models.html` | AI-бенчмарк моделей: фильтры по производителю, специализации и личному опыту |
 | `sorterlab.html` | Кейс системного анализа автоматизированного сортировочного центра |
 | `sorterlab-simulator.html` | Самостоятельная параметрическая модель с ползунками |
 | `ux.html` | UX-кейс кабинета самозанятого |
