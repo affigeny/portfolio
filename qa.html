@@ -109,9 +109,9 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
   <div class="shell hero-inner">
     <div class="kicker rise">QA · ручное и exploratory тестирование</div>
     <h1 class="display rise" data-d="1" style="margin-top:16px">
-      Ищу, где система <span class="l2">ломается</span>
+      Выявляю разрывы в <span class="l2">сквозном сценарии</span>
     </h1>
-    <p class="lead rise" data-d="2">Не демонстрация теории, а сделанная работа: я взял собственный живой прототип и провёл по нему систематический QA-аудит — сценарии, консоль, доступность, адаптивность, граничные случаи. Ниже методика, реальные найденные дефекты с классификацией и честный список того, что ещё не проверял.</p>
+    <p class="lead rise" data-d="2">QA-аудит живого прототипа: пользовательские сценарии, DOM, консоль, доступность, адаптивность и граничные случаи. Ниже — методика, три дефекта с классификацией и границы этого прогона.</p>
   </div>
 </header>
 
@@ -120,8 +120,8 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
   <div class="shell">
     <div class="sec-head">
       <span class="kicker rise">01 · Методика</span>
-      <h2 class="sec-title rise" data-d="1">Пять фаз, а не хаотичный клик</h2>
-      <p class="rise" data-d="2">Exploratory-тестирование — не «потыкать наугад». Это структурированный проход, где каждая находка получает шаги воспроизведения, серьёзность и доказательство. Так работает баг-репорт, который разработчик может закрыть без переспросов.</p>
+      <h2 class="sec-title rise" data-d="1">Пять фаз системного прогона</h2>
+      <p class="rise" data-d="2">Каждая находка получает шаги воспроизведения, серьёзность и доказательство. Баг-репорт даёт разработчику достаточно данных для воспроизведения и исправления без переспросов.</p>
     </div>
     <div class="phases">
       <div class="phase rise"><div class="n">01</div><h4>План</h4><p>Скоуп, карта экранов и сценариев, список того, что проверяю: навигация, формы, состояния, edge-кейсы.</p></div>
@@ -139,7 +139,7 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
     <div class="sec-head">
       <span class="kicker rise">02 · Объект тестирования</span>
       <h2 class="sec-title rise" data-d="1">Аудит: прототип «Личный кабинет самозанятого»</h2>
-      <p class="rise" data-d="2">Тестировал свой же прототип — <a href="https://affigeny.github.io/profi-case-study/">affigeny.github.io/profi-case-study</a>. Прогон в Chrome, десктоп 1712px и мобильный вьюпорт 390px, через DevTools и accessibility-дерево. Ниже — реальные находки, не выдуманные.</p>
+      <p class="rise" data-d="2">Прототип: <a href="https://affigeny.github.io/profi-case-study/">affigeny.github.io/profi-case-study</a>. Прогон в Chrome: десктоп 1712 px, мобильный вьюпорт 390 px, DevTools и accessibility-дерево.</p>
     </div>
     <div class="note rise">
       <b>Сводка.</b> Проверено: разметка, семантика заголовков, доступность, адаптивность на 390 / 1712 px, консоль, ссылки и интерактивные элементы. Найдено <b>3 дефекта</b>: 0 критических, 1 средний, 2 низких. Блокирующих нет; находки касаются семантики и содержания страницы.
@@ -197,7 +197,7 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
     </div>
 
     <div class="note honest rise">
-      <b>Что я честно НЕ проверял в этом прогоне.</b> Кросс-браузерность (Firefox, Safari), реальные тач-жесты на устройстве, производительность и метрики загрузки, поведение при медленной сети, скринридер вживую (только accessibility-дерево), контраст всех текстовых пар по WCAG попиксельно. Это отдельные прогоны — указываю, чтобы отчёт не выглядел полнее, чем есть. Отличать проверенное от непроверенного — часть работы тестировщика.
+      <b>В этот прогон не входило.</b> Кросс-браузерность в Firefox и Safari, реальные тач-жесты на устройстве, производительность и метрики загрузки, медленная сеть, проверка со скринридером и попиксельная проверка контраста по WCAG. Для каждого пункта нужен отдельный прогон.
     </div>
 
     <div class="tbl-wrap rise">
@@ -215,7 +215,7 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
 
 <footer>
   <div class="fin">
-    <div>QA-кейс · реальный аудит, а не теория · август 2026</div>
+    <div>QA-кейс · аудит живого прототипа · август 2026</div>
     <div>
       <a href="index.html">Портфолио</a> ·
       <a href="https://github.com/affigeny">github.com/affigeny</a> ·
