@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI-бенчмарк 2026 — Евгений Андреев</title>
+<meta name="description" content="Практическое сравнение 9 языковых моделей 2026 года на рабочих задачах: код, аналитика, русский язык, стоимость и контекст.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Golos+Text:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#050505;--ink2:#0b0b0c;--surface:oklch(18% .006 60);--surface2:oklch(23% .008 60);--line:oklch(31% .01 60);--text:oklch(96% .005 80);--muted:oklch(71% .012 70);--dim:oklch(54% .014 70);--fire:oklch(70% .19 48);--hot:oklch(82% .16 68);--ok:oklch(75% .14 152);--warn:oklch(79% .14 86);--r:14px;--rl:24px;--pad:clamp(20px,4vw,44px);--shell:min(1240px,calc(100% - var(--pad) - var(--pad)));--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--ink);color:var(--text);font-family:'Golos Text',system-ui,sans-serif;line-height:1.65;overflow-x:clip;font-variant-ligatures:none;background-image:radial-gradient(1000px 560px at 80% -8%,oklch(28% .07 45/.44),transparent 64%)}
+a{color:var(--fire);text-decoration:none}a:hover{color:var(--hot)}
+.shell{width:var(--shell);margin:auto}
+.display,h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:400;letter-spacing:-.02em}
+.kicker{font:11px 'IBM Plex Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--fire)}
+p{color:var(--muted)}strong,b{color:var(--text)}code{font-family:'IBM Plex Mono';color:var(--hot)}
+.nav{position:fixed;inset:0 0 auto;z-index:50;background:oklch(5% 0 0/.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
+.navin{width:var(--shell);height:56px;margin:auto;display:flex;align-items:center;gap:22px}
+.brand{font:18px 'Oswald';letter-spacing:.06em;color:var(--dim)}.brand b{color:var(--fire)}
+.links{margin-left:auto;display:flex;gap:18px;overflow-x:auto}.links a{font-size:12px;color:var(--muted);white-space:nowrap}
+header.hero{padding:124px 0 56px}
+.hero h1{font-size:clamp(38px,6vw,64px);line-height:.98;max-width:20ch;margin-top:16px}
+.lead{font-size:clamp(16px,1.6vw,19px);color:var(--text);max-width:74ch;margin-top:20px}
+.boundary{margin-top:24px;max-width:80ch;border-top:1px solid #604d31;padding:14px 0 0;color:oklch(76% .012 70);font-size:13.5px}
+.boundary b{color:var(--hot)}
+section{padding:clamp(40px,6vh,72px) 0}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.pill{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:12.5px;color:var(--muted);background:var(--surface);cursor:pointer;font-family:'IBM Plex Mono'}
+.pill.active{color:var(--hot);border-color:oklch(48% .13 48);background:var(--surface2)}
+.search{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 14px;color:var(--text);font-size:13.5px;min-width:220px;outline:none}
+.search:focus{border-color:var(--fire)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--ink2)}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:13.5px}
+th,td{text-align:left;vertical-align:top;padding:13px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:10px 'IBM Plex Mono';text-transform:uppercase;letter-spacing:.11em;color:var(--dim);cursor:pointer;user-select:none}
+th:hover{color:var(--hot)}th.sort-asc::after{content:" ▲";color:var(--fire)}th.sort-desc::after{content:" ▼";color:var(--fire)}
+tr:hover td{background:oklch(23% .02 45/.35)}
+td:first-child{white-space:normal;min-width:180px}
+.model-name{font-weight:700;color:var(--text);display:block}
+.model-vendor{font-size:11px;color:var(--dim);font-family:'IBM Plex Mono'}
+.bar{height:6px;background:oklch(28% .01 60);border-radius:3px;overflow:hidden;width:64px;display:inline-block;vertical-align:middle;margin-right:8px}
+.barfill{height:100%;background:linear-gradient(90deg,var(--fire),var(--hot));border-radius:3px}
+.score{font-family:'IBM Plex Mono';font-size:12.5px}
+.tag-cn{color:var(--warn)}.tag-us{color:var(--ok)}
+.foot-note{font-size:12.5px;color:var(--dim);margin-top:16px;max-width:80ch}
+.foot-note a{color:var(--muted)}
+.contacts{display:flex;flex-wrap:wrap;gap:16px;margin-top:8px}
+.contact-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted)}
+.contact-item svg{width:16px;height:16px;flex:none;stroke:var(--dim)}
+.contact-item a{color:var(--muted)}.contact-item a:hover{color:var(--hot)}
+footer{padding:36px 0 52px;border-top:1px solid var(--line);background:var(--ink2);margin-top:20px}
+.fin{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--dim);font-size:13px;align-items:center}
+@media(max-width:760px){.links a:nth-child(3){display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="navin"><div class="brand">ЕВГЕНИЙ <b>АНДРЕЕВ</b></div><div class="links"><a href="index.html">Портфолио</a><a href="sorterlab.html">SorterLab</a><a href="models.html" style="color:var(--fire)">AI-бенчмарк</a><a href="https://t.me/Evandrus">@Evandrus</a></div></div></nav>
+
+<header class="hero"><div class="shell">
+  <div class="kicker">Практический AI-бенчмарк · август 2026</div>
+  <h1 class="display">Какую модель для какой задачи</h1>
+  <p class="lead">Девять моделей, которыми пользуюсь для кода, аналитики и текстов на русском: пять китайских (открытый вес), Anthropic, Google, OpenAI. Столбцы «Код / Аналитика / RU-текст» — личная оценка по повторяющимся рабочим задачам, а не публичный бенчмарк. Контекст и цена — открытые данные площадок API на момент публикации.</p>
+  <div class="boundary"><b>Важно:</b> субъективные столбцы отражают мой опыт использования, а не независимое тестирование. Цены и контекстные окна меняются провайдерами без предупреждения — проверяйте перед выбором модели для продакшена.</div>
+</div></header>
+
+<section><div class="shell">
+  <div class="controls">
+    <input class="search" id="q" placeholder="🔍 Поиск модели или вендора…">
+    <button class="pill active" data-f="all">Все</button>
+    <button class="pill" data-f="cn">Китайские (open weight)</button>
+    <button class="pill" data-f="us">Anthropic / Google / OpenAI</button>
+  </div>
+  <div class="tablewrap">
+    <table id="t">
+      <thead><tr>
+        <th data-k="name" data-t="s">Модель</th>
+        <th data-k="coding" data-t="n">Код</th>
+        <th data-k="analytics" data-t="n">Аналитика</th>
+        <th data-k="russian" data-t="n">RU-текст</th>
+        <th data-k="ctxText" data-t="s">Контекст</th>
+        <th data-k="priceIn" data-t="n">Цена вх./вых. $/M</th>
+        <th data-k="note" data-t="s">Заметка</th>
+      </tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+  <p class="foot-note">Публичные ориентиры для контекста и цены — сводки лидербордов на август 2026 (Vellum LLM Leaderboard, LLM-Stats, AnotherWrapper). Личные оценки код/аналитика/RU собраны на задачах: рефакторинг Python, разбор логов, составление резюме и технических текстов на русском.</p>
+</div></section>
+
+<footer><div class="shell fin">
+  <div>Евгений Андреев · AI-бенчмарк · август 2026</div>
+  <div class="contacts">
+    <span class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .26.18.57.69.48A10 10 0 0 0 12 2Z"/></svg><a href="https://github.com/andreevgeny">github.com/andreevgeny</a></span>
+    <span class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M22 2 2 10l7 3 3 8 3-4 5 3Z"/><path d="M9 13l9-8"/></svg><a href="https://t.me/Evandrus">@Evandrus</a></span>
+    <span class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:8885882@mail.ru">8885882@mail.ru</a></span>
+    <span class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8.9 9.6a16 16 0 0 0 5.5 5.5l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z"/></svg>+7 905 745 77 78</span>
+  </div>
+</div></footer>
+
+<script>
+const data=[
+{name:"DeepSeek V4 Pro",vendor:"DeepSeek · open weight",tag:"cn",coding:98,analytics:97,russian:96,ctxText:"1M",priceIn:0.44,priceOut:0.87,note:"Топ по коду и рассуждениям в связке, дешёвый контекст 1M"},
+{name:"GLM-5.2 (Max)",vendor:"Zhipu / Z.ai · open weight",tag:"cn",coding:96,analytics:95,russian:95,ctxText:"1M",priceIn:0.6,priceOut:2.2,note:"Лидер SWE-bench Pro среди open weight, флагманский агент"},
+{name:"Qwen3.7 Max",vendor:"Alibaba · proprietary",tag:"cn",coding:90,analytics:92,russian:85,ctxText:"262K",priceIn:1.2,priceOut:5.0,note:"Сильная аналитика, средний русский по опыту"},
+{name:"Kimi K2.6",vendor:"Moonshot AI · open weight",tag:"cn",coding:87,analytics:88,russian:80,ctxText:"256K",priceIn:0.95,priceOut:4.0,note:"Быстрый (342 т/с), agentic tool-use на уровне флагманов"},
+{name:"MiniMax M3",vendor:"MiniMax · open weight",tag:"cn",coding:82,analytics:84,russian:78,ctxText:"512K",priceIn:0.9,priceOut:3.3,note:"Мультимодальный, средний по русскому языку"},
+{name:"Claude Opus 4.6",vendor:"Anthropic",tag:"us",coding:97,analytics:94,russian:93,ctxText:"200K–1M",priceIn:15.0,priceOut:75.0,note:"Лучший код и нюансы письма, дорогой, closed SWE-bench лидер"},
+{name:"Claude Sonnet 5",vendor:"Anthropic",tag:"us",coding:94,analytics:91,russian:90,ctxText:"1M",priceIn:3.0,priceOut:15.0,note:"Агентный дефолт: Terminal-Bench 2.1 80.4%, баланс цена/качество"},
+{name:"Gemini 3.1 Pro",vendor:"Google",tag:"us",coding:88,analytics:96,russian:82,ctxText:"1M",priceIn:2.0,priceOut:12.0,note:"Абстрактные рассуждения и наука (GPQA 94%), мультимодальность"},
+{name:"GPT-5.5",vendor:"OpenAI",tag:"us",coding:90,analytics:89,russian:86,ctxText:"400K",priceIn:5.0,priceOut:25.0,note:"Структурированные рассуждения, computer-use выше человека"}
+];
+let sortKey="coding",sortDir="desc",filter="all";
+function render(){
+  const q=document.getElementById('q').value.toLowerCase();
+  let rows=data.filter(m=>(filter==='all'||m.tag===filter)&&(m.name.toLowerCase().includes(q)||m.vendor.toLowerCase().includes(q)));
+  rows.sort((a,b)=>{let x=a[sortKey],y=b[sortKey];if(typeof x==='string')return sortDir==='asc'?x.localeCompare(y):y.localeCompare(x);return sortDir==='asc'?x-y:y-x});
+  const tb=document.getElementById('tb');tb.innerHTML='';
+  rows.forEach(m=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><span class="model-name">${m.name}</span><span class="model-vendor ${m.tag==='cn'?'tag-cn':'tag-us'}">${m.vendor}</span></td>
+    <td><span class="bar"><span class="barfill" style="width:${m.coding}%"></span></span><span class="score">${m.coding}</span></td>
+    <td><span class="bar"><span class="barfill" style="width:${m.analytics}%"></span></span><span class="score">${m.analytics}</span></td>
+    <td><span class="bar"><span class="barfill" style="width:${m.russian}%"></span></span><span class="score">${m.russian}</span></td>
+    <td>${m.ctxText}</td>
+    <td>$${m.priceIn.toFixed(2)} / $${m.priceOut.toFixed(2)}</td>
+    <td style="white-space:normal;color:var(--muted);font-size:12.5px;max-width:260px">${m.note}</td>`;
+    tb.appendChild(tr);
+  });
+}
+document.querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{
+  const k=th.dataset.k;
+  document.querySelectorAll('th').forEach(h=>h.classList.remove('sort-asc','sort-desc'));
+  sortDir=(sortKey===k&&sortDir==='desc')?'asc':'desc';sortKey=k;
+  th.classList.add(sortDir==='asc'?'sort-asc':'sort-desc');
+  render();
+}));
+document.querySelectorAll('.pill').forEach(p=>p.addEventListener('click',()=>{
+  document.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));p.classList.add('active');
+  filter=p.dataset.f;render();
+}));
+document.getElementById('q').addEventListener('input',render);
+render();
+</script>
+</body>
+</html>
