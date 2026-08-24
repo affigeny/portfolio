@@ -128,8 +128,7 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
   gap:clamp(16px,2.4vw,36px);height:62px}
 
 /* Контакты в шапке — только иконки, без текста. Текстовая версия живёт
-   в лиде (hero-foot) и в футере страницы: третий повтор одного адреса
-   на экране читается как шум. Иконка 30×30 с ховером в акцент. */
+   в футере страницы: повтор одного адреса на экране читается как шум. Иконка 30×30 с ховером в акцент. */
 .nav-soc{display:flex;align-items:center;gap:4px;margin-left:8px}
 .nav-soc a{display:inline-flex;align-items:center;justify-content:center;
   width:32px;height:32px;border-radius:9px;color:var(--dim);
@@ -236,8 +235,7 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 
      .hero-grid ─ сетка: 2 колонки + подвал во всю ширину
        ├── .hero-col-main   ЛЕВАЯ  колонка: kicker → h1 → .tagline
-       ├── .hero-col-side   ПРАВАЯ колонка: .photo-frame → .sub
-       └── .hero-foot       ПОДВАЛ: .cta слева | .cx-row справа
+       └── .hero-col-side   ПРАВАЯ колонка: .photo-frame → .sub → кнопка
 
    ЧТО ГДЕ МЕНЯТЬ — указатель:
      ширина колонки фото ......... --photo в .hero-grid
@@ -308,8 +306,9 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
    gap задаёт расстояние фото → биография. Не заменяй его на
    margin-top:auto у .sub: биография прижимается к низу колонки и между
    кадром и текстом открывается дыра на 155px. */
-.hero-col-side{display:flex;flex-direction:column;gap:clamp(18px,2vw,24px);
-  padding-top:5px}
+/* Кнопка под биографией: margin-top задаёт воздух от текста,
+   align-self:flex-start не даёт ей растянуться на всю колонку. */
+.hero-col-side .pill{margin-top:clamp(20px,2.4vw,28px);align-self:flex-start}
 /* Линейка у биографии — псевдоэлемент, а не padding-left + border-left:
    с padding текст съезжал на 16px правее кадра и правый блок «дрожал»
    (фото по одной оси, текст по другой). left:-17px = 16px + 1px линия. */
@@ -318,21 +317,6 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
   left:-17px;top:3px;bottom:3px;width:1px;
   background:linear-gradient(180deg,oklch(70% 0.16 50/.55),var(--line) 60%)}
 
-/* ПОДВАЛ ЛИДА: всё, что можно нажать, одной строкой.
-   Сетка повторяет сетку лида (1fr + --photo), поэтому кнопки стоят по
-   левому краю, а контакты — точно на оси колонки фото (x=970 при 1440).
-   Раньше контакты начинались на x=695 — ни по одной оси композиции.
-   Линия подвала же подводит общую черту под колонки разной высоты. */
-.hero-foot{grid-column:1 / -1;margin-top:clamp(34px,4vw,50px);
-  padding-top:26px;border-top:1px solid var(--line);
-  display:grid;gap:20px clamp(32px,4.4vw,64px);
-  grid-template-columns:minmax(0,1fr) var(--photo);align-items:center}
-.hero-foot .cta{display:flex;gap:12px;flex-wrap:wrap;margin:0}
-/* Контактов в лиде три (Telegram живёт кнопкой рядом), поэтому столбец,
-   а не сетка: при 2×2 третий элемент оставлял пустую ячейку ~180px.
-   Столбец из трёх строк по высоте совпадает с парой кнопок слева. */
-.hero-foot .cx-row{display:flex;flex-direction:column;align-items:flex-start;
-  gap:8px}
 
 /* ── КОНТАКТЫ С ИКОНКАМИ · один стиль в лиде и в футере ────────
    Раньше в лиде контакты были простыми ссылками, а в футере — с
@@ -421,8 +405,6 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
   .hero-col-side{margin-top:36px;padding-top:0}
   .hero-col-side .sub{padding-left:17px}
   .hero-col-side .sub::before{left:0}
-  .hero-foot{grid-template-columns:minmax(0,1fr);gap:22px}
-  .hero-foot .cx-row{flex-direction:row;flex-wrap:wrap;gap:10px 20px}
 }
 @media (prefers-reduced-motion:reduce){
   .photo-clip img,.photo-frame::before,.photo-clip::after{transition:none}
@@ -562,7 +544,7 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
     </details>
 
     <!-- КОНТАКТЫ В ШАПКЕ · только иконки, без текста.
-         Полные адреса — в лиде (hero-foot) и в футере страницы.
+         Полные адреса — в футере страницы.
          Новый контакт = <a> с svg-иконкой 24x24 и aria-label. -->
     <div class="nav-soc">
       <a href="https://github.com/andreevgeny" aria-label="GitHub" title="GitHub">
@@ -613,8 +595,8 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
   </div>
   <div class="shell hero-inner hero-grid">
     <!-- ЛЕВАЯ КОЛОНКА · надзаголовок → заголовок → лид.
-         Кнопки сюда не добавляй: они в .hero-foot, иначе колонки
-         разъезжаются по высоте на ~130px. -->
+         Кнопок и контактов здесь нет: действие живёт под биографией
+         справа, контакты — иконками в шапке и текстом в футере. -->
     <div class="hero-col-main">
       <div class="kicker rise">Системный анализ · поведение · сложные системы · AI</div>
       <h1 class="display rise" data-d="1" style="margin-top:16px">
@@ -646,28 +628,12 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
            колонка перегоняет левую по высоте. -->
       <p class="sub rise" data-d="2">Инженер-теплоэнергетик. Проектировал автоматику и интерфейсы MasterSCADA, руководил инженерами, создавал проектный отдел, отвечал за сервис UHNWI, восемь лет вёл журнал поведенческих наблюдений. С 2024 года пишу код на Python с языковыми моделями.</p>
 
+      <!-- Единственное действие правой колонки: читатель познакомился
+           с биографией — здесь момент предложить контакт. -->
+      <a class="pill hot rise" data-d="3" href="https://t.me/Evandrus">Написать в Telegram</a>
+
     </div>
 
-    <!-- ПОДВАЛ ЛИДА · действия слева, контакты справа.
-         Ссылки на страницы (Ценность, SorterLab, AI-бенчмарк) сюда НЕ
-         добавляй: они уже в шапке и в карточках секции «Артефакты».
-         Третий повтор одного адреса на экране = навигационный шум. -->
-    <div class="hero-foot">
-      <div class="cta rise" data-d="3">
-        <a class="pill hot" href="#work">Смотреть артефакты</a>
-        <a class="pill" href="https://t.me/Evandrus">Написать в Telegram</a>
-      </div>
-      <!-- Контакты: тот же .cx-row/.cx-item, что в футере страницы.
-           Правишь здесь — поправь и в футере, иначе один и тот же набор
-           снова начнёт выглядеть как два разных блока.
-           Новый контакт = <span class="cx-item"> с иконкой 24×24. -->
-      <div class="cx-row rise" data-d="3">
-        <span class="cx-item"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .26.18.57.69.48A10 10 0 0 0 12 2Z"/></svg><a href="https://github.com/andreevgeny">andreevgeny</a></span>
-        <span class="cx-item"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:8885882@mail.ru">8885882@mail.ru</a></span>
-        <span class="cx-item"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8.9 9.6a16 16 0 0 0 5.5 5.5l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z"/></svg><a href="tel:+7-905-745-77-78">+7 905 745 77 78</a></span>
-      </div>
-    </div>
-  </div>
 </header>
 
 <section id="do">
