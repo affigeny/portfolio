@@ -67,10 +67,13 @@ em{color:var(--fire-hot);font-style:normal;font-weight:700}
 
 .shell{width:var(--shell);margin-inline:auto}
 section{position:relative;padding-block:clamp(52px,7vh,92px)}
-.sec-head{margin-bottom:26px;max-width:84ch}
+.sec-head{margin-bottom:34px;max-width:84ch}
 .sec-head .kicker{display:block;margin-bottom:12px}
-.sec-head p{margin-top:14px;font-size:16px}
-.sec-num{position:absolute;top:clamp(18px,3vh,40px);right:var(--pad);
+/* Лид отделён от заголовка заметнее: при кегле h2 до 62px отступ 14px
+   читался как прилипшая к заголовку строка. */
+.sec-head p{margin-top:24px;font-size:16px}
+/* Призрачная цифра опущена: на 1440px она почти упиралась в линию навбара. */
+.sec-num{position:absolute;top:clamp(30px,4.4vh,58px);right:var(--pad);
   font-family:'Oswald',sans-serif;font-size:clamp(52px,9vw,132px);line-height:.7;
   color:transparent;-webkit-text-stroke:1px var(--line);pointer-events:none;user-select:none}
 
@@ -157,10 +160,12 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 @media (max-width:900px){.cell.w3,.cell.w4,.cell.w6{grid-column:span 12}}
 
 /* ── КАРТОЧКИ АРТЕФАКТОВ · 3D-наклон по курсору ──────────── */
-.deck{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));perspective:1200px}
+/* Гуттер больше внутреннего отступа: иначе карточки «дышат» внутри,
+   но толкаются снаружи — колонки читаются как одна масса. */
+.deck{display:grid;gap:34px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));perspective:1200px}
 .card{position:relative;transform-style:preserve-3d;display:flex;flex-direction:column;
   background:linear-gradient(155deg,var(--surface-2),var(--ink-2));
-  border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;
+  border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;
   transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
   transition:transform .5s var(--ease-out),border-color .4s;will-change:transform}
 .card:hover{border-color:oklch(48% 0.14 45)}
@@ -168,17 +173,38 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
   background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),oklch(80% 0.14 55/.14),transparent 62%);
   opacity:0;transition:opacity .4s}
 .card:hover::after{opacity:1}
-.card .role{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--fire);margin-bottom:12px}
-.card h3{margin-bottom:8px;transform:translateZ(24px)}
-.card p{flex:1;font-size:14.5px}
-.card .facts{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
-  font-size:13px;color:var(--muted)}
+/* Роль — служебная метка, не участник заголовочной иерархии: уведена
+   в нейтральный серый, чтобы не соперничать с акцентом ссылок и цифр.
+   Фиксированная высота под две строки (не min-height): при min-height
+   короткая метка занимала одну строку и её карточка поднимала заголовок
+   выше соседних — ряд ломался. */
+.card .role{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--dim);line-height:1.5;
+  height:3em;padding-bottom:14px;margin-bottom:18px;
+  border-bottom:1px solid var(--line)}
+/* Заголовок: явный скачок кегля от 14.5px текста, иначе ступень держится
+   только на насыщенности. text-wrap:balance выравнивает строки, чтобы
+   не оставался одинокий хвост из одного слова. */
+.card h3{font-size:25px;line-height:1.16;margin-bottom:16px;
+  text-wrap:balance;transform:translateZ(24px)}
+.card p{flex:1;font-size:14.5px;line-height:1.6}
+/* Подвал прибит к низу самим flex:1 на описании: «резинкой» остаётся
+   только абзац, поэтому факты, теги и ссылки стоят на одной линии
+   во всём ряду без дополнительной обёртки. */
+.card .facts{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:13px;color:var(--muted);line-height:1.5}
 .card .facts b{color:var(--ok)}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.tag{background:oklch(100% 0 0/.04);border:1px solid var(--line);border-radius:5px;
-  padding:3px 9px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--dim)}
-.card .links{margin-top:15px;display:flex;gap:16px;flex-wrap:wrap;font-size:14px;font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tag{background:oklch(100% 0 0/.04);border:1px solid var(--line);border-radius:7px;
+  padding:4px 10px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted)}
+/* Первая ссылка — основное действие, вторая уводится в нейтральный цвет:
+   две одинаковые оранжевые ссылки подряд читались как одна фраза.
+   Подчёркивание оставлено, иначе вторичная не читается как кликабельная. */
+.card .links{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);
+  display:flex;gap:22px;flex-wrap:wrap;font-size:14px;font-weight:700}
+.card .links a + a{color:var(--muted);font-weight:600;
+  text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
+.card .links a + a:hover{color:var(--fire);text-decoration-color:currentColor}
 
 /* ── ТАБЛИЦЫ ─────────────────────────────────────────────── */
 .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);
@@ -303,7 +329,7 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
         <div class="role">Системный анализ · intralogistics · simulation</div>
         <h3>SorterLab — модель сортировочного центра</h3>
         <p>Декомпозиция логистического потока, technology scouting оборудования, расчёт пропускной способности и пересборка архитектуры после обнаружения дорогого промежуточного звена. Отдельная HTML-модель показывает bottleneck и backlog при изменении линий, контуров, AMR, цикла и неравномерности.</p>
-        <div class="facts"><b>3 узла</b> A → B → E · единицы приведены к товарам/час · исправлена размерность AMR</div>
+        <div class="facts"><b>3 узла</b> A → B → E · единицы приведены к&nbsp;товарам/час · исправлена размерность AMR</div>
         <div class="tags"><span class="tag">WMS/WCS</span><span class="tag">Bottleneck</span><span class="tag">Simulation</span><span class="tag">Industrial automation</span></div>
         <div class="links"><a href="sorterlab.html">Открыть кейс</a><a href="sorterlab-simulator.html">Запустить модель</a></div>
       </div>
@@ -312,7 +338,7 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
         <div class="role">Python · LLM · Production</div>
         <h3>YT_Bot_Sum — транскрибация и суммаризация</h3>
         <p>Принимает голосовые, аудиофайлы и ссылки YouTube, включая Shorts. Транскрибирует, обрабатывает по шаблонам, даёт продолжить разговор с моделью. Мультипровайдерность, обход блокировок выкачки, восстановление состояния, статистика использования, Docker, деплой на Render.</p>
-        <div class="facts"><b>4355 строк</b> Python в 4 модулях · <b>15 релизов</b> с тегами · Dockerfile + render.yaml</div>
+        <div class="facts"><b>4355 строк</b> Python в 4 модулях · <b>15 релизов</b> с&nbsp;тегами · Dockerfile + render.yaml</div>
         <div class="tags"><span class="tag">Python 3.11</span><span class="tag">aiogram 3</span><span class="tag">yt-dlp</span><span class="tag">Whisper</span><span class="tag">SQLite</span><span class="tag">Docker</span></div>
         <div class="links"><a href="https://github.com/andreevgeny/YT_Bot_Sum">Репозиторий</a><a href="https://github.com/andreevgeny/YT_Bot_Sum/releases">Релизы</a></div>
       </div>
