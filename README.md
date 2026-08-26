@@ -22,6 +22,8 @@
 | `models.html` | AI-бенчмарк моделей: фильтры по производителю, специализации и личному опыту |
 | `sorterlab.html` | Кейс системного анализа автоматизированного сортировочного центра |
 | `sorterlab-simulator.html` | Самостоятельная параметрическая модель с ползунками |
+| `sorterlab/` | Python-пакет модели: валидация, расчёт мощностей, симуляция, CLI, тесты |
+| `sorterlab-model.js` | Общая JS-логика для браузерного симулятора |
 | `ux.html` | UX-кейс кабинета самозанятого |
 | `qa.html` | QA-аудит живого прототипа |
 | `_drafts/cases-DRAFT-unverified.html` | Черновик разборов кейсов, **не публикуется** |
@@ -40,6 +42,17 @@
 python3 -m http.server 8000
 # http://localhost:8000
 ```
+
+## SorterLab model (Python)
+
+```bash
+python3 -m pip install -e .
+python3 -m pytest -q
+python3 -m sorterlab.cli capacity
+python3 -m sorterlab.cli simulate --minutes 10 --format json
+```
+
+Подробности: `sorterlab/README.md`.
 
 ## Релизы
 

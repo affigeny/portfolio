@@ -5,3 +5,9 @@ prototype_*.html
 index_photo_left.html
 _probe*.html
 _p*.html
+
+# Python venv and build artifacts
+.venv/
+*.egg-info/
+__pycache__/
+*.pyc
