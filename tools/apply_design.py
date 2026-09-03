@@ -1,18 +1,47 @@
 #!/usr/bin/env python3
-"""Дизайн-система и плавающий кластер: палитра, шкала 1.618, тема, металл,
+"""Дизайн-система и плавающий пульт: палитра, шкала 1.618, тема, металл,
    стрелка «далее» к следующему кейсу, иконки контактов.
 
-   Кластер — вертикальный стек в правом нижнем углу:
-     [металл] [тема] ─── [далее →] ─── [TG] [✉] [GH] [☎]
+   Пульт — один ряд в правом нижнем углу, слева направо:
+     [GH] [TG] [✉] [☎] │ [металл] [свет|тьма] │ [далее →]
+
+   Почему именно такой порядок
+   ---------------------------
+   Контакты стоят первыми, а не последними. Пульт читается как строка:
+   слева — то, чем страница полезна прямо сейчас, справа — служебное.
+   Раньше было наоборот: сначала переключатели дизайна, потом стрелка,
+   потом контакты. Человек, который дошёл до конца кейса и хочет
+   написать, натыкался сначала на тумблер темы.
+
+   GitHub первый среди контактов: это единственная ссылка, которая
+   доказывает сказанное на странице кодом. Telegram — канал прямого
+   отклика, поэтому сразу за ним.
+
+   Тема — двусторонний тумблер (div.theme-toggle с двумя кнопками
+   data-theme-set), а не одна кнопка с циклом system → light → dark.
+   В трёхпозиционном цикле клик «system → light» при системной светлой
+   теме визуально ничего не менял: это был пустой клик. assets/theme.js
+   слушает только [data-theme-set]; старая разметка button[data-theme-toggle]
+   им не обслуживается, и тема на такой странице не переключается вовсе.
+   Это и было «пульт сломан»: блок на месте, а клик уходит в никуда.
 
    Раньше «далее» и контакты жили отдельной плашкой `<aside
    class="next-step">` в подвале: вертикальный столбик с двумя
    смысловыми блоками, и контакты дублировали футер. Скрипт
    `_add_next_step.py` раскатывал её на семь страниц. Теперь её
-   функция переехала в плавающий кластер — слитно, гармонично,
+   функция переехала в плавающий пульт — слитно, гармонично,
    всегда видно. Скрипт заодно снимает старую плашку
    (`<!-- next-step-v1 -->…<!-- /next-step-v1 -->`), так что откат
    возможен повторным запуском старого `_add_next_step.py`.
+
+   Пути
+   ----
+   assets/css/design.css и assets/js/theme.js. Раньше здесь стояли
+   assets/design.css и assets/theme.js: когда файлы разложили по
+   подпапкам, скрипт остался на старых путях и при запуске вставил бы
+   битые ссылки. Обходить его ручными правками после этого — значит
+   держать эталон в десяти файлах и неизбежно что-то пропустить: так
+   и вышло, три страницы остались на старой разметке.
 """
 from __future__ import annotations
 
@@ -22,8 +51,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-CSS_HREF = "assets/design.css"
-JS_SRC = "assets/theme.js"
+CSS_HREF = "assets/css/design.css"
+JS_SRC = "assets/js/theme.js"
 
 SKIP_PREFIX = ("proto_", "prototype_", "index_photo", "_")
 SKIP_NAMES = {"OVERVIEW.html"}
@@ -48,18 +77,9 @@ NEXT = {
 }
 
 # Канонические контакты. Тот же набор, что в футере. Порядок:
-# сначала канал прямого отклика (Telegram), потом почта, GitHub, телефон.
+# GitHub — доказательство кодом, Telegram — канал прямого отклика,
+# затем почта и телефон. Подробности — в докстринге файла.
 CONTACTS = [
-    (
-        "https://t.me/eandreev",
-        "Telegram",
-        '<path d="M22 2 2 10l7 3 3 8 3-4 5 3Z"/><path d="M9 13l9-8"/>',
-    ),
-    (
-        "mailto:eugene.v.andreev@gmail.com",
-        "Почта",
-        '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
-    ),
     (
         "https://github.com/andreevgeny",
         "GitHub",
@@ -70,6 +90,16 @@ CONTACTS = [
         "-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02"
         " 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.35 4.68"
         "-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .26.18.57.69.48A10 10 0 0 0 12 2Z\"/>",
+    ),
+    (
+        "https://t.me/eandreev",
+        "Telegram",
+        '<path d="M22 2 2 10l7 3 3 8 3-4 5 3Z"/><path d="M9 13l9-8"/>',
+    ),
+    (
+        "mailto:eugene.v.andreev@gmail.com",
+        "Почта",
+        '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
     ),
     (
         "tel:+7-925-888-58-82",
@@ -88,7 +118,7 @@ NEXT_STEP_RE = re.compile(
 
 
 def build_cluster(page_name: str) -> str:
-    """Собирает разметку плавающего кластера для конкретной страницы."""
+    """Собирает разметку плавающего пульта для конкретной страницы."""
     next_url, next_label = NEXT.get(page_name, (None, None))
     next_html = ""
     if next_url:
@@ -107,15 +137,26 @@ def build_cluster(page_name: str) -> str:
     )
     return f"""{MARK_OPEN}
 <div class="switch-cluster">
+{cx_items}
+  <div class="switch-cluster__sep" aria-hidden="true"></div>
   <button class="metal-toggle" type="button" data-metal-toggle aria-label="Акцент: латунь">
     <span class="metal-toggle__icon" aria-hidden="true"></span><span data-metal-label>Латунь</span>
   </button>
-  <button class="theme-toggle" type="button" data-theme-toggle aria-label="Тема: как в системе">
-    <span class="theme-toggle__icon" aria-hidden="true"></span><span data-theme-label>Авто</span>
-  </button>
-{next_html}  <div class="switch-cluster__sep" aria-hidden="true"></div>
-{cx_items}
-</div>
+  <div class="theme-toggle" data-theme-toggle role="group" aria-label="Тема оформления">
+    <button class="theme-toggle__opt" data-theme-set="light" type="button" aria-label="Светлая тема" title="Светлая тема">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+      </svg>
+    </button>
+    <button class="theme-toggle__opt" data-theme-set="dark" type="button" aria-label="Тёмная тема" title="Тёмная тема">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+    <span class="theme-toggle__ind" aria-hidden="true"></span>
+  </div>
+{next_html}</div>
 {MARK_CLOSE}"""
 
 
@@ -135,12 +176,31 @@ def strip_previous(src: str) -> str:
 
 
 def insert_after_last_style(src: str, chunk: str) -> tuple[str, bool]:
-    """Подключает CSS после авторского <style>: design.css переопределяет
-    `:root` по порядку, иначе выиграет страница и палитра не соберётся."""
-    matches = list(re.finditer(r"</style\s*>", src, re.I))
+    """Подключает CSS и тему после авторского <style>: design.css
+    переопределяет `:root` по порядку, иначе выиграет страница и
+    палитра не соберётся.
+
+    Ищем `</style>` только внутри <head>. Раньше поиск шёл по всему
+    документу, и на viral.html — где в конце <body> лежит ещё один блок
+    стилей — design.css уезжал в самый последний файла. Страница целиком
+    отрисовывалась без дизайн-системы и перекрашивалась, только когда
+    парсер доходил до последней строки.
+    """
+    head_close = re.search(r"</head\s*>", src, re.I)
+    span_end = head_close.start() if head_close else len(src)
+    matches = list(re.finditer(r"</style\s*>", src[:span_end], re.I))
     if not matches:
         return src, False
-    return src[: matches[-1].end()] + "\n" + chunk + src[matches[-1].end() :], True
+    cut = matches[-1].end()
+    return src[:cut] + "\n" + chunk + src[cut:], True
+
+
+def insert_after_head(src: str, chunk: str) -> tuple[str, bool]:
+    """Страховка для страниц без <style>: ставим сразу после <head>."""
+    head = re.search(r"<head[^>]*>", src, re.I)
+    if not head:
+        return src, False
+    return src[: head.end()] + "\n" + chunk + src[head.end() :], True
 
 
 def apply(path: Path) -> str:
@@ -148,21 +208,19 @@ def apply(path: Path) -> str:
     src = strip_previous(src)
     notes: list[str] = []
 
-    src, ok = insert_after_last_style(src, LINK_TAG)
+    # CSS и тема ставятся одним куском и в одном месте: design.css
+    # переопределяет палитру страницы, theme.js должен успеть выставить
+    # data-theme до первой отрисовки. Разносить их по разным концам
+    # <head> незачем, а рассинхрон выглядит как мигание при загрузке.
+    chunk = LINK_TAG + "\n" + SCRIPT_TAG
+    src, ok = insert_after_last_style(src, chunk)
     if not ok:
-        head = re.search(r"<head[^>]*>", src, re.I)
-        if head:
-            src = src[: head.end()] + "\n" + LINK_TAG + src[head.end() :]
-            notes.append("нет <style>")
-        else:
+        src, ok = insert_after_head(src, chunk)
+        if not ok:
             return f"{path.name:26} пропуск: не нашёл ни <style>, ни <head>"
+        notes.append("нет <style>")
     else:
-        notes.append("css")
-
-    head_close = re.search(r"</head\s*>", src, re.I)
-    if head_close:
-        src = src[: head_close.start()] + SCRIPT_TAG + "\n" + src[head_close.start() :]
-        notes.append("тема")
+        notes.append("css+тема")
 
     body = re.search(r"<body[^>]*>", src, re.I)
     if not body:

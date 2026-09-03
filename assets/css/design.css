@@ -144,21 +144,22 @@ html[data-theme="dark"] {
    Акцент намеренно приглушён до тёмной латуни: тот же #c9a96a на белом
    не читается, а осветлённый вариант теряет связь с брендом. */
 html[data-theme="light"] {
-  /* Фон тёплый, бумажный: #fbfaf8 рядом с белым --surface давал
-     холодный сине-серый отлив, особенно на больших площадях. Сдвиг
-     в сторону тёплого крема (#faf5ec) убирает ощущение «мёртвой
-     подложки» и лучше сочетается с латунным акцентом. */
-  --bg: #faf5ec;
-  --bg-2: #f1ebe0;
-  --surface: #fffdf8;
-  --surface-2: #f5efe4;
-  --line: #e4e0d9;
-  --line-strong: #d2cdc4;
+  /* Фон белый, а не тёплый крем. Крем (#faf5ec) на большом поле
+     читался как «слегка осветлённая тёмная тема», а не как светлая:
+     разница с тёмной была в полтона, и переключение почти не
+     ощущалось. Белый даёт честный контраст режимов. Нейтральный
+     серый подтон в оттенках второго уровня (--bg-2, --surface-2)
+     оставлен, иначе белое на белом не отделить. */
+  --bg: #ffffff;
+  --bg-2: #f4f5f7;
+  --surface: #ffffff;
+  --surface-2: #f5f6f8;
+  --line: #e3e5e9;
+  --line-strong: #ccd0d6;
 
-  --text: #1a1917;
-  --muted: #5e5a53;
-  /* Тот же расчёт, что и в тёмной: #8a857c давал 3.52:1. */
-  --dim: #6f6a61;
+  --text: #14151a;
+  --muted: #52545c;
+  --dim: #61636b;
 
   /* Акцент приглушён до тёмной латуни (формулировка выше сохранена):
      на светлом фоне тот же #c9a96a, что и в тёмной теме, не читается.
@@ -193,16 +194,19 @@ html[data-theme="light"] {
 /* Авторежим: системная настройка, пока пользователь не выбрал явно. */
 @media (prefers-color-scheme: light) {
   html[data-theme="system"] {
-    --bg: #faf5ec;
-    --bg-2: #f1ebe0;
-    --surface: #fffdf8;
-    --surface-2: #f5efe4;
-    --line: #e4e0d9;
-    --line-strong: #d2cdc4;
+    /* Те же значения, что и в явной светлой теме: системный режим
+       должен выглядеть так же, иначе «авто» и «светлая» — две
+       разные светлые темы. */
+    --bg: #ffffff;
+    --bg-2: #f4f5f7;
+    --surface: #ffffff;
+    --surface-2: #f5f6f8;
+    --line: #e3e5e9;
+    --line-strong: #ccd0d6;
 
-    --text: #1a1917;
-    --muted: #5e5a53;
-    --dim: #6f6a61;
+    --text: #14151a;
+    --muted: #52545c;
+    --dim: #61636b;
 
     --accent: #7d5e12;
     --accent-hover: #5a4100;
@@ -518,8 +522,17 @@ html[data-theme="light"] .scroll-hint em {
 html[data-theme="light"] .boundary {
   color: var(--text);
 }
-html[data-theme="light"] .filter-row .filter-l {
-  color: var(--muted);
+/* `.filter-l` отсюда убрано 03.09: такого класса нет ни на одной
+   странице, правило было мёртвым. Его селектор оборвался на половине
+   правки и склеился со следующим — из-за этого оба правила ниже
+   перестали совпадать с разметкой. */
+/* `.sr-only` наследует цвет от родителя. В футере родитель — .cx-item
+   с авторским `color: oklch(78% .01 70)` (рассчитан на тёмный фон);
+   в светлой теме это даёт 1.84:1. Сам текст визуально спрятан
+   clip'ом, но при отключённом CSS или в screen-reader'е без стилей
+   он должен читаться. Принудительно возвращаем тёмный --text. */
+html[data-theme="light"] .sr-only {
+  color: var(--text);
 }
 html[data-theme="light"] .filter-row .result-count {
   color: var(--text);
@@ -580,10 +593,12 @@ html[data-theme="light"] p[style*="oklch(88%"] {
 html[data-theme="light"] .group-head td {
   color: #c9a96a !important;
 }
-html[data-theme="light"] .v-openai {
-  color: oklch(40% 0.13 152) !important;
-  background: oklch(94% 0.05 152) !important;
-}
+/* Vendor-чипы по одному на продавца: у каждого свой hue. Правила
+   .v-deepseek … .v-google лежат в models.html рядом с базовыми
+   .v-*; .v-openai раньше ошибочно жил здесь, и когда его сносили
+   полправки, в models.html осталась дыра — чип OpenAI проваливался
+   до 2.79:1 (замер _probe_contrast.py, светлая тема). Перенесён
+   к соседям, здесь больше не дублируется. */
 html[data-theme="light"] .filter-row .filter-label,
 html[data-theme="light"] .result-count,
 html[data-theme="light"] .foot-note {
@@ -1240,15 +1255,8 @@ html[data-theme] .fin {
   flex-wrap: wrap;
   gap: 10px 18px;
 }
-/* Разделитель между прямыми контактами и соцсетями: вертикальная
-   черта, а не отступ. Без неё восемь иконок подряд читаются как
-   один набор одинаковых ссылок. */
-.fin-sep {
-  width: 1px;
-  height: 18px;
-  background: var(--line);
-  flex: none;
-}
+/* Разделителя .fin-sep больше нет: в футере остались живые контакты
+   (.fin-cx) и навигация (.fin-nav), делить нечего. */
 .fin-nav {
   display: flex;
   flex-wrap: wrap;
@@ -1411,13 +1419,17 @@ html[data-theme] .fin {
     transition: none !important;
   }
 
-  /* Элементы, которыми управляют, а не читают. */
+  /* Элементы, которыми управляют, а не читают.
+     Правило восстановлено 03.09: правка, снимавшая мёртвый селектор
+     `.controls` (такого класса нет ни на одной странице), оборвалась
+     и склеила этот список со следующим — из-за этого ползунки,
+     кнопки и поля ввода перестали скрываться и поехали на бумагу
+     вместе с подписями контактов. */
   input,
   select,
   textarea,
   button,
-  .sim-controls,
-  .controls {
+  .sim-controls {
     display: none !important;
   }
 
