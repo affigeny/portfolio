@@ -403,33 +403,27 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 .hero-cta .pill{margin-top:0}
 
 .hero-col-side{display:flex;flex-direction:column;gap:14px;padding-top:5px}
-/* Линейка у биографии — псевдоэлемент, а не padding-left + border-left:
-   с padding текст съезжал на 16px правее кадра и правый блок «дрожал»
-   (фото по одной оси, текст по другой). left:-17px = 16px + 1px линия. */
-.hero-col-side .sub{position:relative;max-width:none;margin-top:0}
-.hero-col-side .sub::before{content:'';position:absolute;
-  left:-17px;top:3px;bottom:3px;width:1px;
-  background:linear-gradient(180deg,oklch(70% 0.16 50/.55),var(--line) 60%)}
-/* Компактная сетка: роли остаются отдельными, но короткие блоки не
-   растягиваются в один длинный столбец. Инженерный блок занимает всю
-   ширину и раскладывает свои пункты в две колонки. */
-.bio-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px}
-.bio-block{position:relative;padding-top:10px;border-top:1px solid var(--line);min-width:0}
-.bio-block--wide{grid-column:1 / -1}
-.bio-block h3{font-size:14px;line-height:1.25;color:var(--text);margin-bottom:5px}
-.bio-block h3 span{display:inline;margin-right:.65em;color:var(--fire);
-  font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;
-  text-transform:uppercase;font-weight:500}
-.bio-block ul{list-style:none;display:grid;gap:2px}
-.bio-block--wide ul{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px}
-.bio-block li{position:relative;color:var(--muted);font-size:12.5px;line-height:1.35}
-.bio-block li::before{content:'—';color:var(--dim);margin-right:5px}
-@media (max-width:900px){
-  .bio-stack{grid-template-columns:1fr;gap:16px}
-  .bio-block--wide{grid-column:auto}
-  .bio-block--wide ul{grid-template-columns:1fr}
-  .bio-block li{font-size:14px;line-height:1.45}
+/* Доказательства под портретом, в узкой правой колонке (--photo ≈ 340px).
+   Одна колонка, не две: при 340px две цифры в ряд оставляют ~150px на
+   ячейку, и подпись «моделей сравнены одной методикой» рвётся на четыре
+   строки. Одна колонка — четыре строки, каждая читается целиком.
+
+   Полоса ролей (.bio-stack), стоявшая здесь раньше, удалена: она
+   дублировала раздел «Опыт» ниже, только хуже — те же факты, но без
+   дат и без перехода в кейс. Четыре числа под фото делают ту же
+   работу короче и ведут в содержание. */
+.proof--rail{
+  grid-template-columns:minmax(0,1fr);
+  gap:var(--sp-2);
+  margin:2px 0 0;
+  max-width:none;
 }
+.proof--rail a{gap:12px}
+/* Цифра меньше, чем в широкой версии: 27px в колонке 340px
+   перетягивает внимание с подписи на число. */
+.proof--rail b{font-size:24px;min-width:2.4ch}
+.proof--rail span{font-size:13.5px;line-height:1.4}
+.hero-cta--rail{margin-top:var(--sp-3)}
 
 
 /* ── КОНТАКТЫ С ИКОНКАМИ · один стиль в лиде и в футере ────────
@@ -793,29 +787,11 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
            одного факта, который можно узнать или проверить. -->
       <p class="tagline rise" data-d="2">Знаю, где в системе теряется ресурс — время, деньги, доверие, внимание, — возвращаю ей целостность и эффективность через создание и реализацию целевых нарративов для каждого ключевого элемента. Проверил на системах учёта газа, в сервисе коттеджного посёлка (UHNWI), в сортировочном центре маркетплейса и в собственной художественной школе.</p>
 
-      <!-- Доказательства · четыре числа, каждое ведёт в кейс.
-           Это и есть блок, продающий остальное содержание: вместо
-           прилагательных про себя — четыре входа в доказуемое. -->
-      <ul class="proof rise" data-d="3">
-        <li><a href="#work"><b>10</b><span>кейсов</span></a></li>
-        <li><a href="sorterlab-simulator.html"><b>3</b><span>узла пропускной способности</span></a></li>
-        <li><a href="models.html"><b>28</b><span>моделей сравнены одной методикой</span></a></li>
-        <li><a href="#exp"><b>11</b><span>выпускников школы, собранной с нуля</span></a></li>
-      </ul>
-
-      <!-- Одно действие: показать работу. Telegram уже доступен в
-           шапке, плавающем пульте, мобильном меню и подвале; пятый
-           призыв на первом экране не повышал контакт, а переключал
-           внимание с доказательств на форму захвата. -->
-      <div class="hero-cta rise" data-d="3">
-        <a class="pill hot" href="#work">Смотреть кейсы ↓</a>
-      </div>
     </div>
 
-    <!-- ПРАВАЯ КОЛОНКА · фото → биография, читаются как один объект,
-         поэтому между ними только gap из .hero-col-side. Кнопки отсюда
-         убраны: колонка — досье, а не форма захвата. Просить контакт
-         дважды на одном экране — значит обесценить обе просьбы. -->
+    <!-- ПРАВАЯ КОЛОНКА · только фото. Биография больше не конкурирует
+         с портретом за узкую колонку и вынесена в полноширинную полосу
+         ниже: роли читаются как досье, а не как подпись под кадром. -->
     <div class="hero-col-side rise" data-d="1">
       <div class="photo-frame" id="photoFrame">
         <div class="photo-clip">
@@ -832,42 +808,23 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
              факта. Нижняя граница карточки остаётся единственной линией. -->
       </div>
 
-      <!-- Порядок и формулировки сохранены по исходному списку опыта. -->
-      <div class="sub bio-stack rise" data-d="2">
-        <article class="bio-block">
-          <h3><span>С 2024 года</span>Python-разработка</h3>
-          <ul>
-            <li>боты транскрибации, AI / Data / ML;</li>
-            <li>15 релизов;</li>
-          </ul>
-        </article>
-        <article class="bio-block">
-          <h3><span>2014 — 2019 · на паузе</span>Руководитель школы-студии прикладного искусства</h3>
-          <ul>
-            <li>11 выпускников создали собственные бренды;</li>
-            <li>премия Губернатора Московской области;</li>
-            <li>грант Минэкономразвития РФ.</li>
-          </ul>
-        </article>
-        <article class="bio-block">
-          <h3><span>Элитный коттеджный посёлок в Барвихе, УДП</span>Технический и сервисный директор</h3>
-        </article>
-        <article class="bio-block">
-          <h3><span>АО Мособлгаз</span>Инженер-метролог</h3>
-        </article>
-        <article class="bio-block bio-block--wide">
-          <h3><span>Одинцовская Теплосеть</span>Инженер-теплоэнергетик</h3>
-          <ul>
-            <li>чинил ПИД-регуляторы деаэраторов котельных;</li>
-            <li>программировал ПЛК;</li>
-            <li>разрабатка, конвертеры «Ом–ток»;</li>
-            <li>проектировал узлы учёта тепла, газа, телеметрии, MasterSCADA;</li>
-            <li>интегрировал телеметрию и мнемосхемы в MasterSCADA;</li>
-            <li>собрал проектно-конструкторский отдел.</li>
-          </ul>
-        </article>
+      <!-- Доказательства — под фото, а не под лидом. Четыре числа,
+           каждое ведёт в кейс. Раньше висели в левой колонке и
+           растягивали её вниз; в узкой правой колонке читаются как
+           досье к портрету: кто это — сразу видно по числам. -->
+      <ul class="proof proof--rail rise" data-d="2">
+        <li><a href="#work"><b>10</b><span>кейсов</span></a></li>
+        <li><a href="sorterlab-simulator.html"><b>3</b><span>узла пропускной способности</span></a></li>
+        <li><a href="models.html"><b>28</b><span>моделей сравнены одной методикой</span></a></li>
+        <li><a href="#exp"><b>11</b><span>выпускников школы, собранной с нуля</span></a></li>
+      </ul>
+
+      <!-- Одно действие: показать работу. -->
+      <div class="hero-cta hero-cta--rail rise" data-d="3">
+        <a class="pill hot" href="#work">Смотреть кейсы ↓</a>
       </div>
     </div>
+
   </div>
 </header>
 
