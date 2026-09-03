@@ -410,23 +410,25 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 .hero-col-side .sub::before{content:'';position:absolute;
   left:-17px;top:3px;bottom:3px;width:1px;
   background:linear-gradient(180deg,oklch(70% 0.16 50/.55),var(--line) 60%)}
-/* Структурированная биография: три коротких слоя вместо одной длинной
-   строки. Заголовок даёт роль, список — проверяемые действия и результат;
-   так правую колонку можно просканировать, не читая абзац целиком. */
-.bio-stack{display:grid;gap:18px}
-.bio-block{position:relative;padding-left:15px}
-.bio-block::before{content:'';position:absolute;left:0;top:.58em;width:5px;height:5px;
-  border-radius:50%;background:var(--fire);box-shadow:0 0 0 4px oklch(70% .19 48/.08)}
-.bio-block h3{font-size:15px;line-height:1.25;color:var(--text);margin-bottom:5px}
-.bio-block h3 span{display:block;margin-bottom:3px;color:var(--fire);
-  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;
+/* Компактная сетка: роли остаются отдельными, но короткие блоки не
+   растягиваются в один длинный столбец. Инженерный блок занимает всю
+   ширину и раскладывает свои пункты в две колонки. */
+.bio-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px}
+.bio-block{position:relative;padding-top:10px;border-top:1px solid var(--line);min-width:0}
+.bio-block--wide{grid-column:1 / -1}
+.bio-block h3{font-size:14px;line-height:1.25;color:var(--text);margin-bottom:5px}
+.bio-block h3 span{display:inline;margin-right:.65em;color:var(--fire);
+  font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;
   text-transform:uppercase;font-weight:500}
-.bio-block ul{list-style:none;display:grid;gap:3px}
-.bio-block li{position:relative;color:var(--muted);font-size:13.5px;line-height:1.45}
-.bio-block li::before{content:'—';color:var(--dim);margin-right:6px}
+.bio-block ul{list-style:none;display:grid;gap:2px}
+.bio-block--wide ul{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px}
+.bio-block li{position:relative;color:var(--muted);font-size:12.5px;line-height:1.35}
+.bio-block li::before{content:'—';color:var(--dim);margin-right:5px}
 @media (max-width:900px){
-  .bio-stack{gap:20px}
-  .bio-block li{font-size:14px}
+  .bio-stack{grid-template-columns:1fr;gap:16px}
+  .bio-block--wide{grid-column:auto}
+  .bio-block--wide ul{grid-template-columns:1fr}
+  .bio-block li{font-size:14px;line-height:1.45}
 }
 
 
@@ -833,14 +835,14 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
       <!-- Порядок и формулировки сохранены по исходному списку опыта. -->
       <div class="sub bio-stack rise" data-d="2">
         <article class="bio-block">
-          <h3>→ <span>С 2024 года</span>Python-разработка</h3>
+          <h3><span>С 2024 года</span>Python-разработка</h3>
           <ul>
             <li>боты транскрибации, AI / Data / ML;</li>
             <li>15 релизов;</li>
           </ul>
         </article>
         <article class="bio-block">
-          <h3>→ <span>2014 — 2019 · на паузе</span>Руководитель школы-студии прикладного искусства</h3>
+          <h3><span>2014 — 2019 · на паузе</span>Руководитель школы-студии прикладного искусства</h3>
           <ul>
             <li>11 выпускников создали собственные бренды;</li>
             <li>премия Губернатора Московской области;</li>
@@ -848,13 +850,13 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
           </ul>
         </article>
         <article class="bio-block">
-          <h3>→ <span>Элитный коттеджный посёлок в Барвихе, УДП</span>Технический и сервисный директор</h3>
+          <h3><span>Элитный коттеджный посёлок в Барвихе, УДП</span>Технический и сервисный директор</h3>
         </article>
         <article class="bio-block">
-          <h3>→ <span>АО Мособлгаз</span>Инженер-метролог</h3>
+          <h3><span>АО Мособлгаз</span>Инженер-метролог</h3>
         </article>
-        <article class="bio-block">
-          <h3>→ <span>Одинцовская Теплосеть</span>Инженер-теплоэнергетик</h3>
+        <article class="bio-block bio-block--wide">
+          <h3><span>Одинцовская Теплосеть</span>Инженер-теплоэнергетик</h3>
           <ul>
             <li>чинил ПИД-регуляторы деаэраторов котельных;</li>
             <li>программировал ПЛК;</li>
