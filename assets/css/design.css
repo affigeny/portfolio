@@ -1022,6 +1022,9 @@ footer {
   stroke-width: 1.7;
   stroke-linecap: round;
   stroke-linejoin: round;
+  /* WebKit: клик по иконке внутри кнопки иногда попадает в <svg>/<path>,
+     а не в саму кнопку. pointer-events:none отдает клик кнопке. */
+  pointer-events: none;
 }
 
 /* Активная половина белая — лежит на залитом акцентом ползунке.
