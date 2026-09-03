@@ -410,6 +410,24 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 .hero-col-side .sub::before{content:'';position:absolute;
   left:-17px;top:3px;bottom:3px;width:1px;
   background:linear-gradient(180deg,oklch(70% 0.16 50/.55),var(--line) 60%)}
+/* Структурированная биография: три коротких слоя вместо одной длинной
+   строки. Заголовок даёт роль, список — проверяемые действия и результат;
+   так правую колонку можно просканировать, не читая абзац целиком. */
+.bio-stack{display:grid;gap:18px}
+.bio-block{position:relative;padding-left:15px}
+.bio-block::before{content:'';position:absolute;left:0;top:.58em;width:5px;height:5px;
+  border-radius:50%;background:var(--fire);box-shadow:0 0 0 4px oklch(70% .19 48/.08)}
+.bio-block h3{font-size:15px;line-height:1.25;color:var(--text);margin-bottom:5px}
+.bio-block h3 span{display:block;margin-bottom:3px;color:var(--fire);
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:500}
+.bio-block ul{list-style:none;display:grid;gap:3px}
+.bio-block li{position:relative;color:var(--muted);font-size:13.5px;line-height:1.45}
+.bio-block li::before{content:'—';color:var(--dim);margin-right:6px}
+@media (max-width:900px){
+  .bio-stack{gap:20px}
+  .bio-block li{font-size:14px}
+}
 
 
 /* ── КОНТАКТЫ С ИКОНКАМИ · один стиль в лиде и в футере ────────
@@ -812,11 +830,35 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
              факта. Нижняя граница карточки остаётся единственной линией. -->
       </div>
 
-      <!-- Биография: три фразы, факты в одном времени и одном лице с
-           лидом слева. Раньше лид был абстрактным, а биография —
-           наоборот, сплошным перечнем: два соседних блока говорили
-           на разных языках про одного человека. -->
-      <p class="sub rise" data-d="2">Инженер-теплоэнергетик: проектировал узлы учёта газа и мнемосхемы MasterSCADA, собрал проектно-конструкторский отдел, три года отвечал за сервис в посёлке для состоятельных семей. 2014 — 2019 — школа-студия прикладного искусства (на паузе): 11 выпускников с собственными брендами, премия Губернатора МО, грант Минэкономразвития РФ. С 2024-го — продакшн на Python: бот для транскрибации и суммаризации, 15 релизов, код открыт.</p>
+      <!-- Биография собрана в три сканируемых слоя: инженерия → управление
+           и школа → Python в продакшене. Заголовок показывает контекст,
+           списки оставляют на виду только проверяемые действия и результаты. -->
+      <div class="sub bio-stack rise" data-d="2">
+        <article class="bio-block">
+          <h3><span>Основа</span>Инженер-теплоэнергетик</h3>
+          <ul>
+            <li>ПИД-регуляторы деаэраторов котельных и программирование ПЛК</li>
+            <li>Конвертеры «Ом–ток» — разработка и пайка</li>
+            <li>Узлы учёта газа, телеметрия и мнемосхемы MasterSCADA</li>
+            <li>Проектно-конструкторский отдел — собран с нуля</li>
+          </ul>
+        </article>
+        <article class="bio-block">
+          <h3><span>2014 — 2019 · на паузе</span>Школа-студия прикладного искусства</h3>
+          <ul>
+            <li>11 выпускников запустили собственные бренды</li>
+            <li>Премия Губернатора Московской области</li>
+            <li>Грант Минэкономразвития РФ</li>
+          </ul>
+        </article>
+        <article class="bio-block">
+          <h3><span>С 2024 года</span>Python в продакшене</h3>
+          <ul>
+            <li>Бот для транскрибации и суммаризации</li>
+            <li>15 релизов · открытый исходный код · лицензия MIT</li>
+          </ul>
+        </article>
+      </div>
     </div>
   </div>
 </header>
