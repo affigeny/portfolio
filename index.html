@@ -402,7 +402,7 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 .hero-cta{display:flex;margin-top:clamp(24px,2.8vw,32px)}
 .hero-cta .pill{margin-top:0}
 
-.hero-col-side{display:flex;flex-direction:column;gap:14px;padding-top:5px}
+.hero-col-side{display:flex;flex-direction:column;gap:14px;padding-top:5px;margin-top:3.2rem}
 /* Доказательства под портретом, в узкой правой колонке (--photo ≈ 340px).
    Одна колонка, не две: при 340px две цифры в ряд оставляют ~150px на
    ячейку, и подпись «моделей сравнены одной методикой» рвётся на четыре
@@ -499,7 +499,7 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
      биография и навигация. Контакты остаются последней строкой. */
   .hero-grid{grid-template-columns:minmax(0,1fr);--photo:min(320px,78vw)}
   .hero-col-main .tagline{max-width:none}
-  .hero-col-side{margin-top:36px;padding-top:0}
+  .hero-col-side{margin-top:calc(36px + 3.2rem);padding-top:0}
   .hero-col-side .sub{padding-left:17px}
   .hero-col-side .sub::before{left:0}
 }
