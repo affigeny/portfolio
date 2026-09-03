@@ -45,7 +45,7 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 
 # Страницы, которые не публикуются и в обход не идут.
 SKIP_NAMES = {"OVERVIEW.html"}

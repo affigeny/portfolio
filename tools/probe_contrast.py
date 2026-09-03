@@ -39,7 +39,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 PROBE_RE = re.compile(
     r'<pre id="PROBE"[^>]*>(.*?)</pre>', re.S

@@ -20,7 +20,7 @@ inline-стили, класс .contact-item, класс .cx-item — а теле
 import re
 import pathlib
 
-BASE = pathlib.Path(__file__).parent
+BASE = pathlib.Path(__file__).parent.parent
 
 TEL_HREF = "tel:" + "-".join(["+7", "925", "888", "58", "82"])
 TEL_TEXT = "+7 (925) 888-58-82"

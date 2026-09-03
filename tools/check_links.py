@@ -33,7 +33,7 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 
 # Служебные папки: черновики, архив, скриншоты и venv в проверку не идут.
 SKIP_DIRS = {

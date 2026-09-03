@@ -35,10 +35,10 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://andreevgeny.github.io/portfolio"
 SITE_NAME = "Евгений Андреев"
-IMAGE_PATH = "assets/og-cover.png"
+IMAGE_PATH = "assets/img/og-cover.png"
 
 # Пропускаются служебные файлы с подчёркиванием и OG-карточка, из которой
 # саму превью снимать незачем — она и есть изображение.

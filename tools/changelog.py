@@ -32,7 +32,7 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 
 # NEXT_STEPS.md больше не лежит рядом: после закрытия P0 внутренние
 # документы живут в Obsidian, а в репозитории остались только страницы.

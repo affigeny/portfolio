@@ -6,6 +6,12 @@ index_photo_left.html
 _probe*.html
 _p*.html
 
+# Временные файлы, которые скрипты из tools/ кладут рядом со страницей,
+# чтобы относительные пути к assets/ оставались рабочими.
+.__shot_*
+.__print_*
+.__probe_*
+
 # Python venv and build artifacts
 .venv/
 *.egg-info/

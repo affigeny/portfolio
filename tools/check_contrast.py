@@ -51,7 +51,7 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 
 # Пары, которые реально встречаются в вёрстке: текст на подложке.
 # Проверять все сочетания бессмысленно — они не используются вместе.
@@ -326,7 +326,7 @@ def extract_block(text: str, selector: str) -> dict[str, str]:
 def main() -> int:
     verbose = "-v" in sys.argv or "--verbose" in sys.argv
 
-    targets = [ROOT / "assets" / "design.css"] + sorted(ROOT.glob("resumes/*.html"))
+    targets = [ROOT / "assets" / "css" / "design.css"] + sorted(ROOT.glob("resumes/*.html"))
     failures: list[str] = []
     unparsed: list[str] = []
     total = 0

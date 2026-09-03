@@ -33,7 +33,7 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "resumes"
 
 # Секции, которые уходят в узкую колонку и на всю ширину. Остальное —

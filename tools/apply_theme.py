@@ -48,7 +48,7 @@ import colorsys
 import pathlib
 import re
 
-BASE = pathlib.Path(__file__).parent
+BASE = pathlib.Path(__file__).parent.parent
 ENGINE_MARKER = "theme-engine-v1"
 STORAGE_KEY = "pf-theme"
 
