@@ -26,7 +26,13 @@ def test_direction_efficiency_floor():
     assert direction_efficiency(10.0) == 0.65
 
 
-def test_bottleneck_switches_to_sort_when_feed_is_low():
+def test_bottleneck_switches_to_sort_when_sort_loops_are_few():
+    """With one sort loop the sorter, not the feed, becomes the constraint.
+
+    feed_lines=4 -> 36_000 items/h, sort_loops=1 -> 30_000 items/h,
+    amr_count=80 -> 1_152_000 items/h. Minimum is sort, so the system
+    runs at 30_000 items/h.
+    """
     params = SystemParameters(
         feed_lines=4,
         sort_loops=1,
@@ -37,8 +43,8 @@ def test_bottleneck_switches_to_sort_when_feed_is_low():
         direction_concentration=0.0,
     )
     result = compute_capacities(params)
-    assert result.bottleneck == BottleneckNode.FEED
-    assert result.system_items_per_hour == 36_000
+    assert result.bottleneck == BottleneckNode.SORT
+    assert result.system_items_per_hour == 30_000
 
 
 def test_bottleneck_switches_to_amr_with_slow_cycle():

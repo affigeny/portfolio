@@ -11,3 +11,48 @@ _p*.html
 *.egg-info/
 __pycache__/
 *.pyc
+
+# ── Внутренние документы (P0) ─────────────────────────────────────
+# Репозиторий публичный, GitHub Pages включён: любой файл из main
+# читается по адресу github.com/andreevgeny/portfolio/blob/main/<файл>.
+# Эти документы туда не попадают никогда — в них стоп-лист («−40 %
+# жалоб — журнала не было»), журнал сверки с пометками «оценка на
+# глаз» и внутренние сомнения. Работодатель, который прочитает такое,
+# увидит не резюме, а объяснение, почему резюме раньше врало.
+#
+# Живая копия — в Obsidian:
+#   VAULT-2/Мои РЕЗЮМЕ/проект-портфолио/
+# Блок про доход (ветки A и B) — в отдельном проекте:
+#   /Users/evgeniyandreev/projects/lidlab/
+#
+# Список — страховка, а не основной механизм: файлы физически убраны
+# из рабочего корня. Если кто-то вернёт их сюда, коммит всё равно
+# не подхватит.
+NEXT_STEPS.md
+OVERVIEW.html
+RESUME_MASTER.md
+COMPETENCE_HUB.md
+COMPETENCE_HUB_S.md
+DESIGN_STANDARD.md
+MARKET_MAPPING.md
+FOR_APPROVAL.md
+HOWTO EDITING PORTFOLIO INDEX.md
+STRATEGY.md
+INSIGHTS.md
+UNPACKING.md
+PARALLEL_TRACKS.md
+VISION_FUNNEL.md
+SNIPPETS.md
+AUDIT_METHODOLOGY.md
+resumes/resume_short.*
+
+# Рабочие артефакты: не публикуются. _shots/ к тому же пересобирается
+# скриптом _shot.py, держать их в репозитории незачем.
+_shots/
+_drafts/
+_archive/
+.pytest_cache/
+
+# Память агента: дневники сессий и заметки по проекту. Служебное,
+# в публичный репозиторий не идёт. НЕ УДАЛЯТЬ — это рабочие данные.
+.workbuddy-ai/

@@ -7,7 +7,8 @@ inline-стили, класс .contact-item, класс .cx-item — а теле
 набор данных выглядел как разные блоки.
 
 Что делает:
-  1. вставляет общий CSS .cx-row/.cx-item перед </style> (если нет);
+  1. вставляет общий CSS .cx-row/.cx-item перед </style> (если нет)
+     и отдельно — правило .sr-only (если нет);
   2. заменяет содержимое футера: навигационные ссылки страницы остаются,
      контакты пересобираются из единого шаблона;
   3. чинит href телефона.
@@ -21,8 +22,8 @@ import pathlib
 
 BASE = pathlib.Path(__file__).parent
 
-TEL_HREF = "tel:" + "-".join(["+7", "905", "745", "77", "78"])
-TEL_TEXT = " ".join(["+7", "905", "745", "77", "78"])
+TEL_HREF = "tel:" + "-".join(["+7", "925", "888", "58", "82"])
+TEL_TEXT = "+7 (925) 888-58-82"
 
 ICONS = {
     "gh": '<path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .26.18.57.69.48A10 10 0 0 0 12 2Z"/>',
@@ -33,14 +34,26 @@ ICONS = {
 
 
 def item(icon, href, text):
-    return (f'<span class="cx-item"><svg viewBox="0 0 24 24">{ICONS[icon]}</svg>'
-            f'<a href="{href}">{text}</a></span>')
+    """Контакт — только иконка. Значение уходит в aria-label, title и
+    скрытый span: глазу видно иконку, скринридеру и поиску — текст.
+
+    Почему так: по договорённости контакты на страницах не светятся
+    текстом. Видимого адреса, ника и номера быть не должно ни в футере,
+    ни в шапке, ни в тексте страницы.
+    """
+    return (
+        f'<span class="cx-item">'
+        f'<a href="{href}" aria-label="{text}">'
+        f'<svg viewBox="0 0 24 24" aria-hidden="true">{ICONS[icon]}</svg>'
+        f'<span class="sr-only">{text}</span>'
+        f'</a></span>'
+    )
 
 
 CONTACTS = [
     item("gh", "https://github.com/andreevgeny", "andreevgeny"),
-    item("tg", "https://t.me/Evandrus", "@Evandrus"),
-    item("mail", "mailto:8885882@mail.ru", "8885882@mail.ru"),
+    item("tg", "https://t.me/eandreev", "@eandreev"),
+    item("mail", "mailto:eugene.v.andreev@gmail.com", "eugene.v.andreev@gmail.com"),
     item("tel", TEL_HREF, TEL_TEXT),
 ]
 
@@ -56,18 +69,26 @@ CSS = """
    ВАЖНО: href телефона записан с дефисами (tel:+7-905-...). Непрерывная
    цепочка цифр маскируется фильтром секретов при записи файла, и ссылка
    превращается в нерабочую. RFC 3966 дефисы разрешает. */
-.cx-row{display:flex;flex-wrap:wrap;gap:10px 20px;font-size:13.5px;align-items:center}
-.cx-item{display:inline-flex;align-items:center;gap:7px;
-  color:var(--muted,#9a938c)}
-.cx-item svg{flex:none;width:14px;height:14px;
+.cx-row{display:flex;flex-wrap:wrap;gap:12px 16px;font-size:13.5px;align-items:center}
+.cx-item{display:inline-flex;align-items:center;color:var(--muted,#9a938c)}
+.cx-item svg{flex:none;width:17px;height:17px;
   stroke:var(--dim,var(--muted,#8a837c));fill:none;stroke-width:1.6;
-  stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s}
-.cx-item a{color:inherit;text-decoration:underline;
-  text-decoration-color:var(--line,var(--border,#3a3532));
-  text-underline-offset:3px;transition:color .25s,text-decoration-color .25s}
-.cx-item a:hover{color:var(--fire,var(--accent,#e2703a));
-  text-decoration-color:currentColor}
-.cx-item:hover svg{stroke:var(--fire,var(--accent,#e2703a))}
+  stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s,transform .25s}
+.cx-item a{display:inline-flex;align-items:center;color:inherit;
+  text-decoration:none;transition:color .25s}
+.cx-item a:hover{color:var(--fire,var(--accent,#e2703a))}
+.cx-item:hover svg{stroke:var(--fire,var(--accent,#e2703a));transform:translateY(-1px)}
+"""
+
+# Значение контакта есть в разметке, но глазом не читается: доступно
+# скринридеру и поиску, не видно на странице.
+# Вставляется ОТДЕЛЬНО от блока выше: у части страниц свой .cx-item
+# (index.html и ещё восемь), поэтому общий блок туда не попадает, и при
+# одной общей проверке `.cx-item{` правило .sr-only остаётся
+# неопределённым — контакт светится текстом вопреки договорённости.
+SR_ONLY = """
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 """
 
 SKIP_PREFIX = ("proto_", "prototype_", "index_photo", "_")
@@ -84,6 +105,36 @@ def page_nav_links(footer_html):
     return out
 
 
+VISIBLE_VALUES = [
+    "eugene.v.andreev@gmail.com",
+    "@eandreev",
+    TEL_TEXT,
+]
+_SR = '<span class="sr-only">{}</span>'
+
+
+def hide_visible_contacts(src):
+    """Прячет контакт, если он встречается как видимый текст страницы.
+
+    Трогает только текстовые узлы — то, что между '>' и '<'. Атрибуты
+    (href, aria-label, title) не повреждаются, иначе ссылка сломается.
+    """
+    def _sub(m):
+        inner = m.group(1)
+        if not inner.strip():
+            return m.group(0)
+        # уже спрятан — не плодим вложенные sr-only при повторном запуске
+        if 'class="sr-only"' in src[max(0, m.start() - 60):m.start()]:
+            return m.group(0)
+        out = inner
+        for val in VISIBLE_VALUES:
+            if val in out:
+                out = out.replace(val, _SR.format(val))
+        return ">" + out + "<"
+
+    return re.sub(r">([^<>]*)<", _sub, src)
+
+
 def main():
     for path in sorted(BASE.glob("*.html")):
         if path.name.startswith(SKIP_PREFIX):
@@ -94,9 +145,14 @@ def main():
             print(f"{path.name:26} футера нет — пропуск")
             continue
 
-        # 1. CSS
+        # 1. CSS: общий блок — если своего нет; .sr-only — всегда.
+        #    Вторая проверка не зависит от первой, иначе на страницах со
+        #    своим .cx-item правило .sr-only пропадает и контакты
+        #    светятся текстом.
         if ".cx-item{" not in src:
             src = src.replace("</style>", CSS + "</style>", 1)
+        if ".sr-only{" not in src:
+            src = src.replace("</style>", SR_ONLY + "</style>", 1)
 
         # 2. футер
         fm = re.search(r"<footer[^>]*>(.*?)</footer>", src, re.S)
@@ -132,6 +188,9 @@ def main():
 
         # 3. телефон в остальных местах страницы
         src = re.sub(r'href="tel:[^"]*"', f'href="{TEL_HREF}"', src)
+
+        # 4. контакт, случайно оставшийся видимым текстом, уходит под иконку
+        src = hide_visible_contacts(src)
 
         path.write_text(src, encoding="utf-8")
         tel_ok = TEL_HREF in path.read_text(encoding="utf-8")

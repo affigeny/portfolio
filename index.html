@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="system" data-metal="brass">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Андреев Евгений Валерьевич — исследование CX/CI, CJM, аналитика, тексты, AI, LLMOps</title>
+<title>Андреев Евгений Валерьевич — исследование опыта в сложных системах, аналитика, тексты, AI, LLMOps</title>
 <meta name="description" content="Андреев Евгений Валерьевич. Исследую поведение людей там, где цена ошибки высока: UHNWI, премиальный сервис, операторы АСУ ТП, iGaming. Тексты, аналитика, Python и LLM в продакшене.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,21 +40,21 @@ body{
   background:var(--ink);color:var(--text);
   font-family:'Golos Text',system-ui,sans-serif;line-height:1.65;letter-spacing:-.01em;
   overflow-x:clip;text-wrap:pretty;
-  /* лигатуры выключены: иначе ffi в affigeny склеивается в глиф
+  /* лигатуры выключены: иначе ffi в andreevgeny склеивается в глиф
      и скопированная из PDF/страницы ссылка ведёт на 404 */
   font-variant-ligatures:none;
   -webkit-font-feature-settings:"liga" 0,"clig" 0;
-  background-image:radial-gradient(1100px 560px at 74% -12%,oklch(28% 0.06 45/.45),transparent 62%);
+  background-image:radial-gradient(1100px 560px at 74% -12%,oklch(28% .045 62/.45),transparent 62%);
 }
 a{color:var(--fire);text-decoration:none;transition:color .25s}
 a:hover{color:var(--fire-hot)}
-::selection{background:var(--fire);color:#0A0500}
+::selection{background:var(--fire);color:var(--on-accent)}
 img,svg{display:block;max-width:100%}
 
 /* ── типографика ─────────────────────────────────────────── */
 /* .display: 0.92 — компромисс для узкого капса. Ниже 0.9 строки
    начинают соприкасаться выносными элементами. */
-.display{font-family:'Oswald',Impact,sans-serif;line-height:.92;
+.display{font-family:'Oswald',Impact,sans-serif;line-height:1.02;
   letter-spacing:-.02em;text-transform:uppercase;font-weight:400}
 /* line-height НЕ МЕНЬШЕ 1.0 для многострочных заголовков: при .88 и
    кегле 62px строка получалась 55px — меньше самого кегля, и вторая
@@ -67,6 +67,13 @@ h4{font-size:15.5px;font-weight:800}
 p{color:var(--muted);font-size:15.5px}
 .kicker{color:var(--fire);font-family:'IBM Plex Mono',monospace;font-size:11px;
   letter-spacing:.22em;text-transform:uppercase}
+/* Надзаголовок-цепочка: этапы разделены стрелкой и переносятся по
+   словам. Сплошной строкой со стрелками он не переносился вовсе —
+   81 знак с трекингом .22em не влезал в колонку 776px и уезжал
+   за её правый край, наезжая на фотокарточку. */
+.chain{display:flex;flex-wrap:wrap;gap:.4em .85em;line-height:1.7}
+.chain span{white-space:nowrap}
+.chain span+span::before{content:'→';margin-right:.85em;color:var(--dim)}
 .mono{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em}
 strong,b{color:var(--text);font-weight:800}
 em{color:var(--fire-hot);font-style:normal;font-weight:700}
@@ -221,7 +228,7 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 .nav-sheet a i{font-family:'IBM Plex Mono',monospace;font-size:10.5px;
   letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-style:normal}
 .nav-sheet .sheet-cta{margin-top:24px;border:0;justify-content:center;
-  background:var(--fire);color:#0A0500;font-weight:700;border-radius:999px;
+  background:var(--fire);color:var(--on-accent);font-weight:700;border-radius:999px;
   padding:15px 24px;font-size:16px}
 .nav-close{position:absolute;top:12px;right:var(--pad);width:40px;height:40px;
   display:flex;align-items:center;justify-content:center;border:1px solid var(--line);
@@ -270,12 +277,21 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
    margin-left:-4px — оптическая компенсация: у крупного узкого капса
    левая боковая глубже, чем у обычного текста, и без сдвига заголовок
    кажется отступившим от края сетки. */
+/* Заголовок стоит на одной вертикали с кикером и лидом: прежний
+   margin-left:-4px был оптической поправкой под капс Oswald, но
+   сдвигал только одну строку блока — левый край «дрожал» между
+   кикером, заголовком и абзацем. Теперь выровнен по сетке. */
 .hero h1{font-size:clamp(42px,7.2vw,96px);max-width:17ch;line-height:1.06;
-  text-wrap:balance;margin-left:-4px}
+  text-wrap:balance;margin-top:var(--sp-2)}
 .hero h1 .l2{background:linear-gradient(180deg,oklch(88% 0.15 70),var(--fire-hot) 40%,var(--fire) 90%);
   -webkit-background-clip:text;background-clip:text;color:transparent}
-.hero .tagline{font-size:clamp(17px,1.8vw,22px);color:var(--text);font-weight:300;
-  margin-top:24px;max-width:62ch}
+/* Лид слева и биография справа — текст одной роли, поэтому приведены
+   к одному семейству и одному начертанию. Раньше лид был weight:300
+   (он же единственный на странице), а биография держала 400 и свой
+   собственный цвет вне токенов — два абзаца рядом выглядели
+   разными шрифтами. */
+.hero .tagline{font-size:clamp(17px,1.55vw,20px);color:var(--text);font-weight:400;
+  line-height:1.6;margin-top:var(--sp-3);max-width:42ch}
 .hero .cta{margin-top:40px;margin-bottom:0}
 /* контраст поднят: в этом абзаце вся фактура опыта */
 .hero .sub{font-size:16px;color:oklch(82% 0.01 70);margin-top:0;max-width:74ch}
@@ -303,9 +319,16 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 /* ПРАВАЯ КОЛОНКА: фото и биография как один объект.
    padding-top:5px — верх кадра садится на оптический капслайн
    надзаголовка, а не на границу его бокса.
-   gap задаёт расстояние фото → биография. Не заменяй его на
-   margin-top:auto у .sub: биография прижимается к низу колонки и между
-   кадром и текстом открывается дыра на 155px. */
+   gap:14px — расстояние фото → биография. Раньше стоял «неявный»
+   22px от box-shadow кадра (0 22px 44px -16px): тень и биография
+   жили в разных слоях, число никто не писал, и при правке тени
+   зазор менялся сам. Явный gap делает расстояние частью раскладки:
+   поправил фото — поправил и расстояние до текста. 14px — на
+   треть уже прежнего, биография читается как подпись к кадру, а
+   не как отдельный блок.
+   Не заменяй на margin-top:auto у .sub: биография прижимается к
+   низу колонки и между кадром и текстом открывается дыра. */
+.hero-col-side{display:flex;flex-direction:column;gap:14px;padding-top:5px}
 /* Кнопка под биографией: margin-top задаёт воздух от текста,
    align-self:flex-start не даёт ей растянуться на всю колонку. */
 .hero-col-side .pill{margin-top:clamp(20px,2.4vw,28px);align-self:flex-start}
@@ -410,16 +433,14 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
   .photo-clip img,.photo-frame::before,.photo-clip::after{transition:none}
   .photo-frame:hover .photo-clip img{transform:none}
 }
-.contacts{margin-top:26px;display:flex;gap:8px 20px;flex-wrap:wrap;font-size:14px;align-items:center}
-.contacts span{color:var(--dim)}
 .pill{display:inline-flex;align-items:center;min-height:42px;padding:10px 18px;
   /* обводка светлее прежней oklch(38%…): на тёмном фоне вторичная кнопка
      читалась как неактивная */
   border:1px solid oklch(52% 0.02 60);border-radius:var(--r);background:oklch(100% 0 0/.05);
   color:var(--text);font-size:13.5px;font-weight:700;transition:border-color .3s,transform .3s var(--ease-out)}
 .pill:hover{border-color:var(--fire);color:var(--fire-hot);transform:translateY(-2px)}
-.pill.hot{background:var(--fire);color:#150800;border-color:transparent}
-.pill.hot:hover{color:#150800;box-shadow:0 12px 34px oklch(65% 0.19 48/.4)}
+.pill.hot{background:var(--fire);color:var(--on-accent);border-color:transparent}
+.pill.hot:hover{color:var(--on-accent);box-shadow:0 12px 34px oklch(65% 0.19 48/.4)}
 .pill:focus-visible{outline:2px solid var(--fire-hot);outline-offset:3px}
 
 /* ── BENTO ───────────────────────────────────────────────── */
@@ -492,7 +513,11 @@ table{width:100%;border-collapse:collapse;font-size:14.5px}
 th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--dim);font-weight:400;border-bottom-color:var(--fire-deep)}
-td:first-child{white-space:nowrap;color:var(--fire);font-weight:700;padding-right:22px}
+/* Пропорция 1 : 4.236 (φ³) — колонка даты в опыте. Узкий столбец
+   рассчитан на «2014 — 2017» без переноса; на образование не
+   распространяется, там оба столбца содержательные. */
+td:first-child{white-space:nowrap;color:var(--fire);font-weight:700;padding-right:var(--s4)}
+.tbl-wrap.tbl-phi3 td:first-child{width:19.1%}
 td b{color:var(--text)}
 tbody tr{transition:background .25s}
 tbody tr:hover{background:oklch(100% 0 0/.022)}
@@ -504,9 +529,75 @@ tbody tr:hover{background:oklch(100% 0 0/.022)}
 footer{border-top:1px solid var(--line);background:var(--ink-2);padding:40px 0 56px;margin-top:40px}
 footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:space-between;
   gap:18px;flex-wrap:wrap;font-size:13.5px;color:var(--dim)}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 </style>
+<link rel="stylesheet" href="assets/design.css">
+<!-- social-meta-v1 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Евгений Андреев">
+<meta property="og:title" content="Андреев Евгений Валерьевич — исследование опыта в сложных системах, аналитика, тексты, AI, LLMOps">
+<meta property="og:description" content="Андреев Евгений Валерьевич. Исследую поведение людей там, где цена ошибки высока: UHNWI, премиальный сервис, операторы АСУ ТП, iGaming. Тексты, аналитика, Python и LLM в продакшене.">
+<meta property="og:image" content="https://andreevgeny.github.io/portfolio/assets/og-cover.png">
+<meta property="og:url" content="https://andreevgeny.github.io/portfolio/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Андреев Евгений Валерьевич — исследование опыта в сложных системах, аналитика, тексты, AI, LLMOps">
+<meta name="twitter:description" content="Андреев Евгений Валерьевич. Исследую поведение людей там, где цена ошибки высока: UHNWI, премиальный сервис, операторы АСУ ТП, iGaming. Тексты, аналитика, Python и LLM в продакшене.">
+<meta name="twitter:image" content="https://andreevgeny.github.io/portfolio/assets/og-cover.png">
+<link rel="canonical" href="https://andreevgeny.github.io/portfolio/">
+<!-- /social-meta-v1 -->
+
+<!-- Schema.org Person · для поискового подсвета и понимания Google,
+   что страница — это человек с портфолио, а не набор ссылок. JSON-LD
+   дешевле микроразметки и не зависит от класса на корне. Поле knowsAbout
+   отражает то, что проверено практикой, а не теги, под которыми меня
+   хочется найти. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Евгений Андреев",
+  "alternateName": "Andreev Evgeny",
+  "url": "https://andreevgeny.github.io/portfolio/",
+  "jobTitle": "Исследователь опыта в сложных системах",
+  "description": "Андреев Евгений Валерьевич. Исследую поведение людей там, где цена ошибки высока: UHNWI, премиальный сервис, операторы АСУ ТП, iGaming. Тексты, аналитика, Python и LLM в продакшене.",
+  "image": "https://andreevgeny.github.io/portfolio/assets/og-cover.png",
+  "sameAs": [
+    "https://github.com/andreevgeny",
+    "https://t.me/eandreev"
+  ],
+  "knowsAbout": [
+    "Промышленная автоматизация",
+    "АСУ ТП",
+    "Премиальный сервис для UHNWI",
+    "Поведение игроков и операторов видеонаблюдения",
+    "UX-исследование в сложных системах",
+    "Промпт-архитектура для LLM",
+    "Python"
+  ]
+}
+</script>
+<script src="assets/theme.js"></script>
 </head>
 <body id="top">
+<!-- design-system-v1 -->
+<div class="switch-cluster">
+  <button class="metal-toggle" type="button" data-metal-toggle aria-label="Акцент: латунь">
+    <span class="metal-toggle__icon" aria-hidden="true"></span><span data-metal-label>Латунь</span>
+  </button>
+  <button class="theme-toggle" type="button" data-theme-toggle aria-label="Тема: как в системе">
+    <span class="theme-toggle__icon" aria-hidden="true"></span><span data-theme-label>Авто</span>
+  </button>
+  <div class="switch-cluster__sep" aria-hidden="true"></div>
+  <a class="switch-cluster__next" href="value.html" data-fab-next="value.html" title="Далее: Ценности и направления" aria-label="Следующая страница: Ценности и направления"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+  <div class="switch-cluster__sep" aria-hidden="true"></div>
+  <a class="switch-cluster__cx" href="https://t.me/eandreev" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 2 10l7 3 3 8 3-4 5 3Z"/><path d="M9 13l9-8"/></svg></a>
+  <a class="switch-cluster__cx" href="mailto:eugene.v.andreev@gmail.com" aria-label="Почта"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+  <a class="switch-cluster__cx" href="https://github.com/andreevgeny" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .26.18.57.69.48A10 10 0 0 0 12 2Z"/></svg></a>
+  <a class="switch-cluster__cx" href="tel:+7-925-888-58-82" aria-label="Телефон"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8.9 9.6a16 16 0 0 0 5.5 5.5l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z"/></svg></a>
+</div>
+<!-- /design-system-v1 -->
 <nav class="nav" id="nav">
   <div class="nav-in">
     <!-- Имя ведёт на верх страницы: логотип должен быть кликабельным,
@@ -552,13 +643,13 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
       <a href="https://github.com/andreevgeny" aria-label="GitHub" title="GitHub">
         <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .26.18.57.69.48A10 10 0 0 0 12 2Z"/></svg>
       </a>
-      <a href="https://t.me/Evandrus" aria-label="Telegram" title="Telegram">
+      <a href="https://t.me/eandreev" aria-label="Telegram" title="Telegram">
         <svg viewBox="0 0 24 24"><path d="M22 2 2 10l7 3 3 8 3-4 5 3Z"/><path d="M9 13l9-8"/></svg>
       </a>
-      <a href="mailto:8885882@mail.ru" aria-label="Почта" title="Почта">
+      <a href="mailto:eugene.v.andreev@gmail.com" aria-label="Почта" title="Почта">
         <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
       </a>
-      <a href="tel:+7-905-745-77-78" aria-label="Телефон" title="Телефон">
+      <a href="tel:+7-925-888-58-82" aria-label="Телефон" title="Телефон">
         <svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8.9 9.6a16 16 0 0 0 5.5 5.5l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z"/></svg>
       </a>
     </div>
@@ -581,13 +672,13 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
   <a href="#work">Артефакты <i>раздел</i></a>
   <a href="#exp">Опыт <i>раздел</i></a>
   <a href="#edu">Образование <i>раздел</i></a>
-  <a href="value.html">Ценность <i>разбор</i></a>
+  <a href="value.html">Ценности <i>разбор</i></a>
   <a href="sorterlab.html">SorterLab <i>кейс</i></a>
   <a href="models.html">AI-бенчмарк <i>данные</i></a>
   <a href="ux.html">UX-кейс <i>концепт</i></a>
   <a href="qa.html">QA-кейс <i>аудит</i></a>
   <a href="writing.html">Тексты <i>работы</i></a>
-  <a class="sheet-cta" href="https://t.me/Evandrus">Написать в Telegram</a>
+  <a class="sheet-cta" href="https://t.me/eandreev">Написать в Telegram</a>
 </div>
 
 <header class="hero">
@@ -600,12 +691,12 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
          Кнопок и контактов здесь нет: действие живёт под биографией
          справа, контакты — иконками в шапке и текстом в футере. -->
     <div class="hero-col-main">
-      <div class="kicker rise">ВИДЕНИЕ→СТРАТЕГИЯ→ТЕСТЫ→АНАЛИТИКА→КОММУНИКАЦИЯ→СОГЛАСОВАННОСТЬ→РЕЗУЛЬТАТ</div>
+      <div class="kicker chain rise"><span>вижу</span><span>перевожу</span><span>соединяю</span></div>
       <h1 class="display rise" data-d="1" style="margin-top:16px">
         Вижу систему <span class="l2">целиком</span>. Соединяю тех, кто видит свою часть
       </h1>
       <!-- Лид: 3–4 фразы. Длиннее — правая колонка проваливается. -->
-      <p class="tagline rise" data-d="2">Специалист знает детали, руководитель — цели и сроки, заказчик&nbsp;— желаемый результат, пользователь — реальную работу. Самые дорогие ошибки возникают между ними. Я нахожу расхождения, перевожу между профессиональными языками и удерживаю исходную цель до результата для бенефициара.</p>
+      <p class="tagline rise" data-d="2">Дороже всего обходится не ошибка в детали, а разрыв между людьми: инженер отвечает за узел, руководитель — за срок, заказчик ждёт результата, а тому, кто будет этим пользоваться, нужно третье. Я нахожу, где их картины разошлись, и перевожу одну на другую, чтобы задуманное доехало до результата.</p>
     </div>
 
     <!-- ПРАВАЯ КОЛОНКА · фото → биография, читаются как один объект,
@@ -628,14 +719,13 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
 
       <!-- Биография: 2–3 фразы про фактуру опыта. Длиннее — правая
            колонка перегоняет левую по высоте. -->
-      <p class="sub rise" data-d="2">Инженер-теплоэнергетик. Проектировал автоматику и интерфейсы MasterSCADA, руководил инженерами, создавал проектный отдел, отвечал за сервис UHNWI, восемь лет вёл журнал поведенческих наблюдений. С 2024 года пишу код на Python с языковыми моделями.</p>
+      <p class="sub rise" data-d="2">Инженер-теплоэнергетик. Проектировал узлы учёта газа и мнемосхемы MasterSCADA, собрал проектно-конструкторский отдел, три года отвечал за сервис в посёлке для состоятельных семей. Восемь лет вёл журнал наблюдений: кто в системе работает в плюс, а кто расходует ресурс. С 2024-го пишу на Python — Telegram-бот для транскрибации и суммаризации, 15 релизов, код открыт.</p>
 
       <!-- Единственное действие правой колонки: читатель познакомился
            с биографией — здесь момент предложить контакт. -->
-      <a class="pill hot rise" data-d="3" href="https://t.me/Evandrus">Написать в Telegram</a>
-
+      <a class="pill hot rise" data-d="3" href="https://t.me/eandreev">Написать в Telegram</a>
     </div>
-
+  </div>
 </header>
 
 <section id="do">
@@ -772,6 +862,19 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
         <div class="tags"><span class="tag">TypeScript</span><span class="tag">Obsidian</span></div>
         <div class="links"><a href="https://github.com/andreevgeny/dynalist-opml-to-markdown">Репозиторий</a></div>
       </div>
+
+      <!-- Резюме: пять версий из одного источника. Раньше ссылок с сайта
+           на них не было — файлы лежали в репозитории мёртвым грузом.
+           Внутренняя шпаргалка (resume_short) сюда не выведена: в ней
+           раздел «чего не писать», он не для наружу. -->
+      <div class="card rise" data-d="1">
+        <div class="role">Резюме · пять версий под роли</div>
+        <h3>Один источник фактов — пять подач</h3>
+        <p>Все версии собраны из одного мастер-файла: даты, формулировки и подтверждения не расходятся между ними. Меняется только акцент — под ту роль, на которую откликаюсь. Каждая версия самодостаточна: стили и тема встроены в файл, она открывается без сети и пересылается вложением.</p>
+        <div class="facts">HTML — переслать или распечатать · Markdown — текст для отклика и hh.ru</div>
+        <div class="tags"><span class="tag">Technical PM</span><span class="tag">System Analyst</span><span class="tag">Implementation</span><span class="tag">CX Research</span><span class="tag">Advisor</span></div>
+        <div class="links"><a href="resumes/resume_tpm_ai.html">Technical PM</a><a href="resumes/resume_sa_pa.html">Системный аналитик</a><a href="resumes/resume_impl.html">Внедрение</a><a href="resumes/resume_cx.html">Исследователь опыта</a><a href="resumes/resume_advisor.html">Советник</a></div>
+      </div>
     </div>
   </div>
 </section>
@@ -783,16 +886,18 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
       <span class="kicker rise">03 · Опыт</span>
       <h2 class="sec-title rise" data-d="1">Хронология без округлений</h2>
     </div>
-    <div class="tbl-wrap rise">
+    <div class="tbl-wrap tbl-phi3 rise">
       <table>
         <thead><tr><th>Период</th><th>Роль и место</th><th>Суть работы</th></tr></thead>
         <tbody>
           <tr><td>2024 — сейчас</td><td><b>Python и языковые модели</b><br>собственные проекты</td><td>Боты с транскрибацией и суммаризацией, промпт-архитектура, оценка качества ответов, деплой и релизный цикл, сравнение моделей под бюджет.</td></tr>
-          <tr><td>2017 — сейчас</td><td><b>Школа-студия прикладного искусства</b><br>основатель, методист, наставник</td><td>Методика обучения художественному тиснению по коже и построению орнамента с нуля: онлайн-среда, живые курсы, туры по городам России. Выпускники дошли до собственных брендов аксессуаров. Премия Губернатора МО, грант Минэкономразвития РФ.</td></tr>
+          <tr><td>2017 — сейчас</td><td><b>Школа-студия прикладного искусства</b><br>основатель, методист, наставник</td><td>Методика обучения художественному тиснению по коже и построению орнамента с нуля: онлайн-среда, живые курсы, туры по городам России. 11 выпускников дошли до собственных брендов аксессуаров. Премия Губернатора МО, грант Минэкономразвития РФ.</td></tr>
           <tr><td>2018 — 2020</td><td><b>Школа робототехники «Роболатория»</b><br>продуктовый дизайнер, UX-идеолог (ГПХ)</td><td>Оптимизация внутренних процессов: организация работы, продажи, взаимодействие с администрацией. Разбирал, где в цепочке «администрация — преподаватель — родитель — ребёнок» теряются время и деньги. Личный кабинет и посадочные страницы, мастер-классы, запуск площадок.</td></tr>
           <tr><td>2016 — 2018</td><td><b>Инженерно-производственная компания</b><br>технический директор, развитие и PR</td><td>Техническое направление и развитие: продукт, сайт, привлечение заказчиков. Калькуляторы подбора оборудования, схемы подключения, перевод характеристик в язык задач заказчика. Сложное B2B с длинным циклом сделки.</td></tr>
-          <tr><td>2014 — 2017</td><td><b>Элитный КП «Сады Майендорф», Жуковка</b><br>руководитель службы клиентского сервиса и эксплуатации</td><td>Резиденты категории UHNWI. Разделил их на типы по поведению и ожиданиям, разобрал путь обращения от звонка до закрытия заявки. Регламенты и юридические извещения → персональные уведомления, предупреждающее информирование о работах, авариях и счетах. Обучение персонала снятию напряжения. CRM заявок, нормативы времени ответа.</td></tr>
-          <tr><td>2007 — 2014</td><td><b>АО «Одинцовская теплосеть», проекты для Мособлгаза</b><br>инженер-проектировщик АСУ ТП, руководитель группы инженеров</td><td>Руководил группой инженеров в службе режимов газоснабжения. Проектировал индивидуальные тепловые пункты и котельные по разделам автоматизации: логика, контроллеры, чертежи в AutoCAD. Создал проектно-конструкторский отдел — 4 месяца с нуля до трёх человек. Телеметрия целиком: преобразователи 0–1 Ом → 4–20 мА своими руками, затем мнемосхемы в MasterSCADA. Переработал шаблоны писем и договоров для промышленных потребителей газа.</td></tr>
+          <tr><td>2014 — 2017</td><td><b>Элитный КП «Сады Майендорф», Жуковка</b><br>руководитель службы клиентского сервиса и эксплуатации</td><td>Резиденты категории UHNWI. Разделил их на типы по поведению и ожиданиям, разобрал путь обращения от звонка до закрытия заявки. Регламенты и юридические извещения → персональные уведомления, предупреждающее информирование о работах, авариях и счетах. Обучение персонала снятию напряжения. CRM заявок, нормативы времени ответа. Вёл планы и отчёты по газу, воде и электричеству, включая сверки с Мособлгазом. Сопровождал выбор и переговоры с немецкими поставщиками газогенераторной установки на 2 МВт; продажа излишков электроэнергии — «Россети Западное».</td></tr>
+          <tr><td>2011 — 2014</td><td><b>АО «Мособлгаз»</b><br>инженер узлов учёта → ведущий инженер-метролог, руководитель группы инженеров</td><td>Проектировал и согласовывал промышленные узлы учёта газа (ПУУГ, ГРС, КПГ) с нуля до ввода в эксплуатацию. Метрологическая экспертиза: ГОСТ 8.579, ПБ 12-369-00, методики ФГИС «Аршин». Система контроля транспорта газа — балансировка объёмов, минимизация коммерческих потерь. Согласования с территориальными органами Росстандарта и сетевыми организациями.</td></tr>
+          <tr><td>2007 — 2011</td><td><b>АО «Одинцовская теплосеть»</b><br>инженер-проектировщик АСУ ТП, затем руководитель направления развития</td><td>Проектировал индивидуальные тепловые пункты и котельные по разделам автоматизации: логика, контроллеры, чертежи в AutoCAD. Программировал ПЛК: ОВЕН, Simatic. Создал проектно-конструкторский отдел — 4 месяца с нуля до трёх человек. Телеметрия целиком: преобразователи 0–1 Ом → 4–20 мА своими руками, затем мнемосхемы в MasterSCADA. Узлы учёта тепла для крупных потребителей — от подбора приборов до сдачи в эксплуатацию. Переработал шаблоны писем и договоров для промышленных потребителей газа.</td></tr>
+          <tr><td>2008</td><td><b>Сочитеплоэнерго</b><br>проектная работа</td><td>Программирование ПЛК-контроллеров на котельных, сборка шкафов телеметрии.</td></tr>
           <tr><td>2003 — 2004</td><td><b>Веб-мастер, трафик, affiliate marketing</b><br>самостоятельно</td><td>Сайты, платный трафик, партнёрские программы. Считал связку «объявление — страница — оплата» на своих деньгах.</td></tr>
           <tr><td>1998 — 2007</td><td><b>Казино «Метелица» и «Капитель», Москва</b><br>инспектор, старший оператор видеонаблюдения</td><td>«Метелица», Новый Арбат: 06.1998–02.2003 и 07.2004–2007. «Капитель»: 01.2004–05.2004. Журнал наблюдений по видеонаблюдению: связка «игрок — крупье», fraud analytics, ошибки игры и разбор причин, мотивации участников; отдельный контур по персоналу. Финансовая отчётность по кассам и столам. Обучил лично больше 400 человек в трёх службах.</td></tr>
         </tbody>
@@ -812,9 +917,9 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
       <table>
         <tbody>
           <tr><td>МГИУ, 2012</td><td> Инженер-теплоэнергетик (ТГВ). Системный анализ, математическое моделирование процессов.</td></tr>
-          <tr><td>КВВКИУPBСН, 1994 — 1998</td><td>Высшее военное командно-инженерное училище РВСН, Краснодар. Командно-инженерный факультет, гражданская специальность — инженер-электромеханик. Не окончил.</td></tr>
-          <tr><td>AutoCAD, 2009</td><td> (Cпециалист) Техническое черчение и инженерная графика.</td></tr>
-          <tr><td>ПЭАТ, 2007</td><td>Сертефицированный фасилиатор, Живорада Славинского, Москва. (Сертификат не сохранился, на ютубе есть видеозапись участия).</td></tr>
+          <tr><td>КВВКИУ РВСН, 1994 — 1998</td><td>Высшее военное командно-инженерное училище РВСН, Краснодар. Командно-инженерный факультет, гражданская специальность — инженер-электромеханик. Не окончил.</td></tr>
+          <tr><td>AutoCAD, 2009</td><td>(специалист) Техническое черчение и инженерная графика.</td></tr>
+          <tr><td>ПЭАТ, 2007</td><td>Обучение у Живорада Славинского, Москва. (Сертификат не сохранился, на ютубе есть видеозапись участия).</td></tr>
           <tr><td>Дизайн орнамента</td><td>Britt Nantz, США. Создание растительно-цветочного орнамента. Художественное тиснение по коже растительного дубления.</td></tr>
           <tr><td>Копирайтинг</td><td>Обучение коммерческому копирайтингу (Школа Влады Маршевой, Даниил Шардаков) с практикой: структуры текста, тон обращения, работа с возражениями, редактура под чтение с экрана.</td></tr>
           <tr><td>Архетипы бренда</td><td>Модель Марк и Пирсон: 12 архетипов, методика «Артишок», уровни проявления, тень архетипа. Применяю как рабочий инструмент позиционирования.</td></tr>
@@ -836,21 +941,9 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
        набор — правь в скрипте и перегенерируй, иначе страницы
        снова разъедутся. -->
   <div class="fin">
-    <div>Собрано как рабочий инструмент: каждая ссылка ведёт на живой код или живую страницу.</div>
-     <div class="nav-soc">
-      <a href="https://github.com/andreevgeny" aria-label="GitHub" title="GitHub">
-        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .26.18.57.69.48A10 10 0 0 0 12 2Z"/></svg>
-      </a>
-      <a href="https://t.me/Evandrus" aria-label="Telegram" title="Telegram">
-        <svg viewBox="0 0 24 24"><path d="M22 2 2 10l7 3 3 8 3-4 5 3Z"/><path d="M9 13l9-8"/></svg>
-      </a>
-      <a href="mailto:8885882@mail.ru" aria-label="Почта" title="Почта">
-        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-      </a>
-      <a href="tel:+7-905-745-77-78" aria-label="Телефон" title="Телефон">
-        <svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8.9 9.6a16 16 0 0 0 5.5 5.5l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z"/></svg>
-      </a>
-    </div>
+    <div class="fin-nav"></div>
+    <div class="fin-cx"><span class="cx-item"><a href="https://t.me/eandreev" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 2 10l7 3 3 8 3-4 5 3Z"/><path d="M9 13l9-8"/></svg><span class="sr-only">Telegram</span></a></span><span class="cx-item"><a href="mailto:eugene.v.andreev@gmail.com" aria-label="Почта"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span class="sr-only">Почта</span></a></span><span class="cx-item"><a href="https://github.com/andreevgeny" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .26.18.57.69.48A10 10 0 0 0 12 2Z"/></svg><span class="sr-only">GitHub</span></a></span><span class="cx-item"><a href="tel:+7-925-888-58-82" aria-label="Телефон"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8.9 9.6a16 16 0 0 0 5.5 5.5l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z"/></svg><span class="sr-only">Телефон</span></a></span></div>
+<div class="fin-copy">Собрано как рабочий инструмент: каждая ссылка ведёт на живой код или живую страницу.</div>
   </div>
 </footer>
 <script>
@@ -994,17 +1087,5 @@ if(bg && !matchMedia('(prefers-reduced-motion:reduce)').matches){
   }
 })();
 </script>
-
-<script>
-window.addEventListener('load',()=>{setTimeout(()=>{
-  const g=s=>{const e=document.querySelector(s);if(!e)return null;
-    const r=e.getBoundingClientRect();
-    return {vis:e.offsetParent!==null,l:Math.round(r.left),r:Math.round(r.right)};};
-  const soc=[...document.querySelectorAll('.nav-soc a')].map(a=>({
-    label:a.getAttribute('aria-label'), vis:a.offsetParent!==null}));
-  parent.postMessage('GEO'+JSON.stringify({brand:g('.brand'),soc:g('.nav-soc'),
-    burger:g('.nav-burger'),socItems:soc,
-    overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth}),'*');
-},800);});
-</script></body>
+</body>
 </html>

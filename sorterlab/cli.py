@@ -199,7 +199,7 @@ def main(argv: list[str] | None = None) -> int:
                     f"{snap.backlog_items:.6f}",
                 ]
                 for snap in result.snapshots
-            ]
+            )
             from io import StringIO
 
             buffer = StringIO()

@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="ru" data-theme="system">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Евгений Андреев · Москва и МО, МСК (UTC+3) · полная удалёнка — Исследователь опыта в сложных системах</title>
+<meta name="description" content="Исследователь опыта в сложных системах. Евгений Андреев: 28 лет в системах с высокой ценой ошибки — промышленная автоматизация, сервис для UHNWI, сейчас Python и языковые модели в продакшене.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Oswald:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+:root,
+html[data-theme="dark"] {
+  --bg: #0a0a0b;      --bg-2: #101012;
+  --surface: #141416; --surface-2: #1a1a1d;
+  --line: #26262a;    --line-strong: #34343a;
+
+  --text: #f2f0ec;  --muted: #a5a19a;  --dim: #8d887f;
+  --accent: #c9a96a;  --accent-hover: #d8bb80;
+  --accent-soft: rgba(201, 169, 106, 0.14);
+  --accent-line: rgba(201, 169, 106, 0.38);
+  --on-accent: #0a0a0b;
+
+  --ok: #6fae86;  --warn: #d9a05b;  --bad: #cf6f6f;
+
+  --r: 14px;  --r-lg: 22px;
+
+  /* Шкала 1.618. Ступени идут через √φ = 1.272: чистый φ на соседних
+     ступенях даёт скачок, на котором рвётся ритм. */
+  --s1: 0.382rem; --s2: 0.618rem; --s3: 1rem;
+  --s4: 1.618rem; --s5: 2.618rem; --s6: 4.236rem;
+
+  --t0: 0.791rem; --t1: 0.875rem; --t2: 1rem;   --t3: 1.125rem;
+  --t4: 1.272rem; --t5: 1.618rem; --t6: 2.058rem; --t7: 2.618rem;
+
+  --pad: clamp(18px, 4vw, 44px);
+  --shell: min(1180px, calc(100% - var(--pad) * 2));
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --font-body: "Golos Text", system-ui, -apple-system, sans-serif;
+  --font-display: "Oswald", "Golos Text", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  color-scheme: dark;
+}
+
+html[data-theme="light"] { 
+  --bg: #fbfaf8;      --bg-2: #f4f2ee;
+  --surface: #ffffff; --surface-2: #f7f5f1;
+  --line: #e4e0d9;    --line-strong: #d2cdc4;
+
+  --text: #1a1917;  --muted: #5e5a53;  --dim: #6f6a61;
+  --accent: #7d5e12;  --accent-hover: #5a4100;
+  --accent-soft: rgba(138, 109, 47, 0.1);
+  --accent-line: rgba(138, 109, 47, 0.34);
+  --on-accent: #ffffff;
+
+  --ok: #3f7d57;  --warn: #8a5f22;  --bad: #a84444;
+
+  color-scheme: light;
+ }
+@media (prefers-color-scheme: light) {
+  html[data-theme="system"] { 
+  --bg: #fbfaf8;      --bg-2: #f4f2ee;
+  --surface: #ffffff; --surface-2: #f7f5f1;
+  --line: #e4e0d9;    --line-strong: #d2cdc4;
+
+  --text: #1a1917;  --muted: #5e5a53;  --dim: #6f6a61;
+  --accent: #7d5e12;  --accent-hover: #5a4100;
+  --accent-soft: rgba(138, 109, 47, 0.1);
+  --accent-line: rgba(138, 109, 47, 0.34);
+  --on-accent: #ffffff;
+
+  --ok: #3f7d57;  --warn: #8a5f22;  --bad: #a84444;
+
+  color-scheme: light;
+ }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--t2);
+  line-height: 1.618;
+  letter-spacing: -0.005em;
+  /* Лигатуры выключены: в моноширинном ffi в «andreevgeny» склеивается
+     в один глиф, и адрес, скопированный из PDF, ведёт на 404. */
+  font-variant-ligatures: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+::selection { background: var(--accent); color: var(--on-accent); }
+
+.page { width: var(--shell); margin-inline: auto; padding-block: var(--s5) var(--s6); }
+
+/* ── Шапка ──────────────────────────────────────────────────────────
+   Имя крупнее роли: читатель ищет фамилию, а не должность. Раскладка
+   снова 1 : 0.618 — текст слева, контакты справа. */
+.hd {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.618fr);
+  gap: var(--s4);
+  align-items: end;
+  padding-bottom: var(--s4);
+  margin-bottom: var(--s5);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: var(--t7);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  margin: 0 0 var(--s2);
+}
+
+.role {
+  font-family: var(--font-mono);
+  font-size: var(--t3);
+  color: var(--accent);
+  margin: 0 0 var(--s2);
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--t1);
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Контакты — текстом, а не иконками. Здесь обратная логика к страницам
+   сайта: резюме нужно затем, чтобы читатель мог дотянуться. */
+.ct { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s1); }
+.ct li { font-family: var(--font-mono); font-size: var(--t1); }
+.ct a { color: var(--text); border-bottom: 1px solid var(--accent-line); }
+.ct a:hover { color: var(--accent); }
+
+/* ── Раскладка ────────────────────────────────────────────────────── */
+/* Одна колонка на всю ширину. Две («main rail») здесь были и давали
+   ровно то, что заметил Евгений при вычитке: содержание узкой колонки
+   кончалось на трети высоты, и дальше «Опыт» шёл с пустым полем
+   справа. Раскладка, которая держится на том, хватит ли коротких
+   разделов по высоте под длинные, не переживает правки текста — а
+   резюме правят при каждом отклике.
+
+   Справочные разделы (инструменты, образование, условия) поэтому
+   уходят в горизонтальную полосу внизу: пустоты нет по построению,
+   при любом объёме текста и при любой печати. Пропорция 1 : 0.618
+   из `DESIGN_STANDARD.md` живёт не здесь, а в шапке и в сетке строк
+   опыта (1 : 4.236) — там, где она не зависит от длины текста. */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--s5);
+}
+.col-rail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--s5);
+  align-items: start;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--line);
+}
+
+.sec { margin-bottom: var(--s5); }
+.sec:last-child { margin-bottom: 0; }
+
+.h {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s2);
+  margin: 0 0 var(--s3);
+  padding-bottom: var(--s2);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--t1);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--dim);
+}
+.h::before {
+  content: "";
+  width: 18px; height: 1px;
+  background: var(--accent);
+  flex: none;
+  transform: translateY(-0.35em);
+}
+
+/* ── Опыт ───────────────────────────────────────────────────────────
+   Даты отдельным столбцом: хронология считывается одним движением
+   взгляда, не вычитываясь из текста. Пропорция 1 : 4.236 = φ³. */
+.job {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 4.236fr);
+  gap: var(--s2) var(--s3);
+  padding-block: var(--s3);
+  border-bottom: 1px solid var(--line);
+}
+.job:last-child { border-bottom: none; }
+
+.job__when {
+  font-family: var(--font-mono);
+  font-size: var(--t1);
+  color: var(--dim);
+  padding-top: 0.15em;
+}
+.job__what h3 {
+  font-family: var(--font-body);
+  font-size: var(--t3);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--s1);
+}
+/* Должность — акцентом, место нейтрально. Раньше жирным шло всё
+   сразу: и место, и должность, и глаз не цеплялся ни за что. Теперь
+   название читается как название, а подсвечена способность — та же
+   логика, по которой резюме продаёт способность, а не носитель. */
+.job__role {
+  margin: 0 0 var(--s2);
+  font-size: var(--t1);
+  color: var(--accent);
+  font-weight: 500;
+}
+.job__what p { margin: 0 0 var(--s2); font-size: var(--t1); color: var(--muted); }
+.job__what p:last-child { margin-bottom: 0; }
+
+/* ── Списки ───────────────────────────────────────────────────────── */
+.bul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s3); }
+.bul li { position: relative; padding-left: var(--s4); font-size: var(--t1); color: var(--muted); }
+.bul li::before {
+  content: "";
+  position: absolute; left: 0; top: 0.62em;
+  width: 6px; height: 6px;
+  border: 1px solid var(--accent);
+  transform: rotate(45deg);
+}
+.bul strong { color: var(--text); font-weight: 600; }
+
+.lead-p { margin: 0 0 var(--s2); font-size: var(--t3); color: var(--muted); max-width: 62ch; }
+
+.txt { margin: 0 0 var(--s2); font-size: var(--t1); color: var(--muted); }
+.txt:last-child { margin-bottom: 0; }
+.txt strong { color: var(--text); }
+
+/* ── Таблица артефактов ───────────────────────────────────────────── */
+.tbl-wrap { overflow-x: auto; }
+.tbl { width: 100%; border-collapse: collapse; font-size: var(--t1); }
+.tbl th {
+  font-family: var(--font-mono);
+  font-size: var(--t0);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  text-align: left;
+  padding-bottom: var(--s2);
+  border-bottom: 1px solid var(--line-strong);
+}
+.tbl td {
+  padding: var(--s2) var(--s3) var(--s2) 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  color: var(--muted);
+}
+.tbl tr:last-child td { border-bottom: none; }
+.tbl td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+.tbl a {
+  font-family: var(--font-mono);
+  font-size: var(--t0);
+  border-bottom: 1px solid var(--accent-line);
+  word-break: break-all;
+}
+
+/* ── Цитата и копирование (шпаргалка) ─────────────────────────────── */
+.q {
+  position: relative;
+  margin: 0 0 var(--s4);
+  padding: var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 var(--r) var(--r) 0;
+}
+.q p { margin: 0 0 var(--s2); line-height: 1.618; }
+.q p:last-child { margin-bottom: 0; }
+.q__copy {
+  position: absolute; top: var(--s2); right: var(--s2);
+  padding: 5px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--bg-2);
+  color: var(--dim);
+  font-family: var(--font-mono);
+  font-size: var(--t0);
+  cursor: pointer;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.q__copy:hover { color: var(--accent); border-color: var(--accent-line); }
+.q__copy.is-ok { color: var(--ok); border-color: var(--ok); }
+
+/* ── Служебная заметка ────────────────────────────────────────────── */
+.note {
+  margin: 0 0 var(--s4);
+  padding: var(--s3) var(--s4);
+  background: var(--surface-2);
+  border-left: 2px solid var(--warn);
+  font-size: var(--t1);
+  color: var(--muted);
+}
+
+/* ── Подвал ───────────────────────────────────────────────────────── */
+.ft {
+  margin-top: var(--s5);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--t0);
+  color: var(--dim);
+}
+
+/* ── Переключатель темы ───────────────────────────────────────────── */
+.tt {
+  position: fixed;
+  right: clamp(14px, 3vw, 28px);
+  bottom: clamp(14px, 3vw, 28px);
+  z-index: 99;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  padding: 9px 15px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--t0);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.tt:hover { color: var(--accent); border-color: var(--accent-line); }
+.tt__i {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  flex: none;
+}
+html[data-theme="dark"] .tt__i,
+html[data-theme="system"] .tt__i { background: linear-gradient(to right, currentColor 0 50%, transparent 50% 100%); }
+html[data-theme="light"] .tt__i { background: currentColor; }
+
+@media (max-width: 900px) {
+  .grid { row-gap: var(--s4); }
+  .col-rail { grid-template-columns: 1fr; gap: var(--s4); }
+  .hd { grid-template-columns: 1fr; align-items: start; }
+  .job { grid-template-columns: 1fr; gap: var(--s1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* ── Печать ───────────────────────────────────────────────────────────
+   Резюме печатают и шлют PDF. Печать всегда светлая: тёмный фон съедает
+   тонер и читается хуже на экране рекрутера. */
+@media print {
+  :root {
+    --bg: #ffffff; --bg-2: #ffffff;
+    --surface: #ffffff; --surface-2: #f6f5f2;
+    --line: #d9d5cd; --line-strong: #b9b5ad;
+    --text: #14130f; --muted: #45423c; --dim: #5c5952;
+    --accent: #5a4100; --accent-line: #b9b5ad; --accent-soft: transparent;
+  }
+  @page { size: A4; margin: 13mm 12mm; }
+
+  html, body { background: #ffffff !important; color: #14130f !important; }
+  body { font-size: 9.6pt; line-height: 1.5; }
+
+  .tt, .q__copy, .note { display: none !important; }
+
+  .page { width: auto; max-width: none; margin: 0; padding: 0; }
+  .hd { padding-bottom: 3mm; margin-bottom: 5mm; }
+  .name { font-size: 20pt; }
+  .role { font-size: 10pt; }
+  .grid { row-gap: 6mm; }
+  /* На бумаге полоса справочных разделов фиксированная в три колонки:
+     auto-fit в печати считает ширину страницы иначе и частенько даёт
+     одну колонку, из-за чего резюме расползается на лишнюю страницу. */
+  .col-rail { grid-template-columns: repeat(3, 1fr); column-gap: 6mm;
+              border-top: 0.5pt solid #d8d5cf; padding-top: 4mm; }
+  .sec { margin-bottom: 5mm; break-inside: avoid; }
+  .job { padding-block: 2mm; break-inside: avoid; }
+  .h { margin-bottom: 3mm; }
+  .tbl { font-size: 8.5pt; }
+  .bul { gap: 2mm; }
+  .ft { font-size: 7.5pt; margin-top: 5mm; }
+
+  /* На бумаге href не виден, поэтому ссылка раскрывается текстом. */
+  a { color: #14130f !important; }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 7pt;
+    color: #5c5952;
+    word-break: break-all;
+  }
+}
+
+</style>
+<script>
+/* Тема выставляется до первой отрисовки: иначе страница успевает
+   показаться тёмной и только потом перекрашивается. */
+(function () {
+  try {
+    var v = localStorage.getItem("pf-theme");
+    document.documentElement.setAttribute(
+      "data-theme",
+      ["system", "light", "dark"].indexOf(v) === -1 ? "system" : v
+    );
+  } catch (e) {
+    document.documentElement.setAttribute("data-theme", "system");
+  }
+})();
+</script>
+</head>
+<body>
+<button class="tt" type="button" data-theme-toggle aria-label="Тема: как в системе">
+  <span class="tt__i" aria-hidden="true"></span><span data-theme-label>Авто</span>
+</button>
+<div class="page">
+
+  <header class="hd">
+    <div>
+      <h1 class="name">Евгений Андреев</h1>
+      <p class="role">Исследователь опыта в сложных системах</p>
+      <p class="meta">Москва и МО, МСК (UTC+3) · полная удалёнка</p>
+    </div>
+    <ul class="ct"><li><a href="mailto:eugene.v.andreev@gmail.com">eugene.v.andreev@gmail.com</a></li><li><a href="https://t.me/eandreev">@eandreev (t.me/eandreev)</a></li><li><a href="tel:+7-925-888-58-82">+7 (925) 888-58-82</a></li><li><a href="https://github.com/andreevgeny">github.com/andreevgeny</a></li><li><a href="https://andreevgeny.github.io/portfolio/">andreevgeny.github.io/portfolio/</a></li></ul>
+  </header>
+  <main class="grid">
+    <div class="col-main"><section class="sec"><h2 class="h">Позиционирование</h2><p class="txt">Исследователь и проектировщик опыта в сложных системах: промышленная автоматизация, премиальный сервис, образовательные продукты, AI-интерфейсы. 28 лет практики на стыке инженерии и человеческого поведения. Умею найти, где в системе теряются время, деньги и доверие, и переделать это место так, чтобы людям стало понятно, а бизнесу — дешевле.</p></section><section class="sec"><h2 class="h">Что делаю и чем это подтверждено</h2><ul class="bul"><li><strong>Вижу реальное поведение, а не рассказ о нём.</strong> Восемь лет вёл журнал наблюдений по видеонаблюдению: связка «игрок — крупье», разбор ошибок игры и их причин, мотивации участников, распознавание схем профессиональных игроков. Отдельный контур по персоналу — кто работает в плюс организации, кто расходует ресурс. Это работает там, где человек не может, не хочет или не умеет объяснить проблему.</li><li><strong>Разбираю путь от первого контакта до закрытия.</strong> В элитном посёлке прошёл путь обращения резидента от звонка до закрытия заявки и перестроил его. В робототехнике — цепочку «администрация — преподаватель — родитель — ребёнок». В теплосети — работу оператора в аварийном режиме. Один навык, четыре среды.</li><li><strong>Перевожу с инженерного на человеческий и обратно.</strong> Шаблоны писем и договоров для промышленных потребителей газа из юридического языка — в прямой, уважительный, технически точный. Регламенты и юридические извещения для резидентов — в персональные уведомления человеческим языком.</li><li><strong>Учитываю, что интерфейс — это физика.</strong> Спаял и смонтировал преобразователи 0–1 Ом → 4–20 мА, запрограммировал ПЛК, нарисовал мнемосхемы в MasterSCADA, написал инструкции операторам. Кто собирал узел руками, не рисует интерфейс, в котором оператор ошибётся.</li><li><strong>Довожу смысл до работающей формы.</strong> Прототип личного кабинета самозанятого: регуляторную обязанность — ИНН, чек, налог — подал через выгоду мастера, а не через страх. Три экрана, value-first онбординг, дашборд экономики работы.</li></ul></section><section class="sec"><h2 class="h">Опыт</h2><div class="jobs">
+<article class="job">
+<div class="job__when">1998 — 2007</div>
+<div class="job__what">
+<h3>Крупное заведение с игровыми залами, службой видеонаблюдения и VIP-сервисом, Москва</h3>
+<p class="job__role">инспектор, старший оператор видеонаблюдения</p>
+<p>Журнал наблюдений по видеонаблюдению, финансовая отчётность по кассам и столам, эргономика оператора мониторинга, расстановка и настройка наблюдения. Лично обучил больше 400 человек в трёх службах: игровая, F&amp;B, приём гостей. <em>Название заведения называю по запросу — по имени или обобщённо, факты от этого не меняются.</em></p>
+</div></article>
+<article class="job">
+<div class="job__when">2014 — 2017</div>
+<div class="job__what">
+<h3>Элитный КП «Сады Майендорф», Жуковка</h3>
+<p class="job__role">руководитель службы клиентского сервиса и эксплуатации</p>
+<p>Резиденты — UHNWI. Разделил их на типы по поведению и ожиданиям, разобрал путь обращения, построил предупреждающее информирование о работах, авариях и счетах — убрал главный источник тревоги. CRM заявок, нормативы ответа, прозрачные статусы. Учил охрану, инженеров и консьержей снимать напряжение. Повторных жалоб стало заметно меньше — журнала обращений не велось, цифру не называю: динамику видел по своей работе, табло с цифрами не было.</p>
+</div></article>
+<article class="job">
+<div class="job__when">2007 — 2011</div>
+<div class="job__what">
+<h3>АО «Одинцовская теплосеть»</h3>
+<p class="job__role">инженер-проектировщик АСУ ТП, затем руководитель направления развития</p>
+<p>Мнемосхемы MasterSCADA: иерархия экранов, снижение визуального шума, цветовое кодирование критичности. Инструкции для операторов. ПЛК ОВЕН и Simatic, телеметрия от датчика до диспетчера своими руками. Операторам стало понятнее, ошибок меньше — интервью в аварийных режимах проводил, хронометраж не вёл.</p>
+</div></article>
+<article class="job">
+<div class="job__when">2018 — 2020</div>
+<div class="job__what">
+<h3>Школа робототехники «Роболатория» (ГПХ)</h3>
+<p>Цепочка «администрация — преподаватель — родитель — ребёнок»: где теряются время и деньги. Личный кабинет, посадочные страницы, онбординг, мастер-классы.</p>
+</div></article>
+<article class="job">
+<div class="job__when">2024 — сейчас</div>
+<div class="job__what">
+<h3>Собственные продукты на Python и LLM</h3>
+<p>Telegram-бот транскрибации и суммаризации: 4 355 строк, 15+ релизов. Шаблоны суммаризации настраивает пользователь. Оценка качества ответов моделей — воспроизводимая методика. Плюс прототип личного кабинета самозанятого.</p>
+</div></article>
+</div></section><section class="sec"><h2 class="h">Как я работаю с методами</h2><p class="txt">Основа — наблюдение с фиксацией и подсчётом, а не интервью по гайду. Восемь лет журнала наблюдений в крупном заведении; 13 лет контакта с UHNWI с двух позиций — элитный посёлок в Жуковке и игорно-развлекательная индустрия; съём требований у операторов в аварийных режимах; производственная документация в регулируемой отрасли.</p>
+<p class="txt">Оформленных CJM и persona-документов, работы в Amplitude или Mixpanel у меня пока нет. Методики знаю, артефактов не делал и за сделанное не выдам. Если вам нужен человек, который завтра принесёт аккуратный CJM в Miro — я не тот кандидат. Если нужен тот, кто найдёт, почему клиенты уходят, и скажет прямо, — давайте поговорим.</p>
+<p class="txt">Готов пройти любое интервью про то, где в системе что жуётся, а что работает в плюс.</p></section></div>
+    <div class="col-wide"><section class="sec"><h2 class="h">Открытые артефакты</h2><div class="tbl-wrap"><table class="tbl">
+<tr><th>Артефакт</th><th>Что внутри</th><th>Ссылка</th></tr>
+<tr><td><strong>Портфолио</strong></td><td>Архетипы в UHNWI-сегменте, разбор механики внимания, кейс сортировочного центра</td><td><a href="https://andreevgeny.github.io/portfolio/">andreevgeny.github.io/portfolio/</a></td></tr>
+<tr><td><strong>Кейс: личный кабинет самозанятого</strong></td><td>Гипотеза, карта сценария, три экрана, план проверки</td><td><a href="https://andreevgeny.github.io/portfolio/ux.html">andreevgeny.github.io/portfolio/ux.html</a></td></tr>
+<tr><td><strong>YT_Bot_Sum</strong></td><td>Как устроен интерфейс бота: шаблоны, состояние, диалог с моделью</td><td><a href="https://github.com/andreevgeny/YT_Bot_Sum">github.com/andreevgeny/YT_Bot_Sum</a></td></tr>
+</table></div></section></div>
+    <aside class="col-rail"><section class="sec"><h2 class="h">Инструменты</h2><p class="txt">Наблюдение с фиксацией и подсчётом, интервью в рабочей обстановке, разбор пути обращения, сегментация по поведению. Системный анализ, BPMN 2.0, Mermaid. Техническое письмо, регламенты, инструкции, UX-редактура. Прототипирование: HTML/CSS/JS, Figma — уровень «собрать и передать в разработку», не выше. Python 3.11, SQL, Docker.</p></section><section class="sec"><h2 class="h">Образование</h2><p class="txt"><strong>2012</strong> МГИУ, инженер-теплоэнергетик (ТГВ): системный анализ, математическое моделирование процессов. <strong>2009</strong> AutoCAD. <strong>2007</strong> ПЭАТ, обучение у Живорада Славинского. <strong>2000-е</strong> Britt Nantz, США — художественное тиснение по коже, орнамент. Школа копирайтинга. Архетипы бренда, модель Марк и Пирсон. <strong>2024+</strong> Python и LLM — самостоятельно. Английский: читаю, говорю, понимаю, рабочий созвон выдерживаю. Свежего сертификата нет, при необходимости пересдам под конкретный оффер.</p></section><section class="sec"><h2 class="h">Условия</h2><p class="txt">Полная удалёнка. Офис или гибрид — только если стратегически оправдано и компенсируется отдельно. <strong>Вилка: по договорённости, обсуждается на созвоне.</strong></p></section></aside>
+  </main>
+  <footer class="ft">Собрано из RESUME_MASTER.md v4.0 (единый источник). Факты не меняются между версиями под роли — меняется заголовок и порядок акцентов.</footer>
+</div>
+<script>
+(function () {
+  "use strict";
+  var KEY = "pf-theme";
+  var ORDER = ["system", "light", "dark"];
+  var LABELS = { system: "Тема: как в системе", light: "Тема: светлая", dark: "Тема: тёмная" };
+  var SHORT = { system: "Авто", light: "Светлая", dark: "Тёмная" };
+
+  function read() {
+    try {
+      var v = localStorage.getItem(KEY);
+      return ORDER.indexOf(v) === -1 ? "system" : v;
+    } catch (e) { return "system"; }
+  }
+  function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+
+  var current = read();
+
+  function sync(btn) {
+    var label = btn.querySelector("[data-theme-label]");
+    if (label) label.textContent = SHORT[current];
+    btn.setAttribute("aria-label", LABELS[current]);
+    btn.setAttribute("title", LABELS[current] + " — нажмите, чтобы сменить");
+  }
+
+  var btn = document.querySelector("[data-theme-toggle]");
+  if (btn) {
+    sync(btn);
+    btn.addEventListener("click", function () {
+      current = ORDER[(ORDER.indexOf(current) + 1) % ORDER.length];
+      document.documentElement.setAttribute("data-theme", current);
+      save(current);
+      sync(btn);
+    });
+  }
+
+  /* Копирование блока сообщения: шпаргалкой пользуются так — скопировал
+     и вставил в Telegram. Кнопка экономит ровно это действие. */
+  document.querySelectorAll("[data-copy]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var src = b.closest(".q").querySelector("[data-copy-src]");
+      if (!src) return;
+      var text = src.innerText.trim();
+      navigator.clipboard.writeText(text).then(function () {
+        var old = b.textContent;
+        b.textContent = "Скопировано";
+        b.classList.add("is-ok");
+        setTimeout(function () { b.textContent = old; b.classList.remove("is-ok"); }, 1400);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
